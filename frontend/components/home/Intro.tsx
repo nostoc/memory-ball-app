@@ -9,7 +9,7 @@ const Intro = () => {
       <div className="flex flex-1 justify-around items-center">
         <div className=" p-2 flex flex-col justify-start">
           <h1 className="text-white font-bold font-bricolage text-[64px]">
-            Bounce Your Way to <br />
+            Bounce Your Way to A <br />
             <span>
               a{" "}
               <span className="bg-white text-title px-4 font-bold font-bricolage text-[64px]">
