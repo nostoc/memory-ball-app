@@ -6,12 +6,13 @@ import {
   getCardsForStudy,
   getDueCards,
 } from "../../../../../../services/studySessionService";
+import { useParams } from "next/navigation";
 
-export default function StudyOptionsPage({
-  params,
-}: {
-  params: { id: string };
-}) {
+export default function StudyOptionsPage() {
+  const params = useParams();
+  const deckId = params.id as string;
+
+  
   const [totalCards, setTotalCards] = useState(0);
   const [dueCards, setDueCards] = useState(0);
   const [loading, setLoading] = useState(true);
@@ -22,19 +23,19 @@ export default function StudyOptionsPage({
         setLoading(true);
 
         // Get total cards
-        const cardsResponse = await getCardsForStudy(params.id);
+        const cardsResponse = await getCardsForStudy(deckId);
         if (cardsResponse?.data?.cards) {
           setTotalCards(cardsResponse.data.cards.length);
         }
 
         // Get due cards
         try {
-          const dueResponse = await getDueCards(params.id);
+          const dueResponse = await getDueCards(deckId);
           if (dueResponse?.data?.cards) {
             setDueCards(dueResponse.data.cards.length);
           }
         } catch (error) {
-            console.log(error);
+          console.log(error);
           // If due cards endpoint doesn't exist yet, just set to 0
           console.warn("Due cards endpoint may not be implemented yet");
           setDueCards(0);
@@ -47,7 +48,7 @@ export default function StudyOptionsPage({
     };
 
     fetchCardCounts();
-  }, [params.id]);
+  }, [deckId]);
 
   return (
     <ProtectedRoute>
@@ -56,7 +57,7 @@ export default function StudyOptionsPage({
           <div>Loading...</div>
         ) : (
           <StudyOptionsForm
-            deckId={params.id}
+            deckId={deckId}
             totalCards={totalCards}
             dueCards={dueCards}
           />

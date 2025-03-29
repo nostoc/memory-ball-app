@@ -1,13 +1,16 @@
 "use client";
 import CardList from "../../../../../components/card/cardList";
 import ProtectedRoute from "../../../../../components/ProtectedRoute";
+import { useParams } from "next/navigation";
 
-export default function CardsPage({ params }: { params: { id: string } }) {
-  // Just use params directly
+export default function CardsPage() {
+  const params = useParams();
+  const deckId = params.id as string;
+
   return (
     <ProtectedRoute>
       <main>
-        <CardList deckId={params.id} />
+        <CardList deckId={deckId} />
       </main>
     </ProtectedRoute>
   );

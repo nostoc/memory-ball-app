@@ -8,13 +8,15 @@ interface RegisterProps {
 }
 
 const Register: React.FC<RegisterProps> = ({ onRegisterSuccess }) => {
+  const [name, setName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<string | null>(null);
 
   const handleRegister = async () => {
     try {
-      const { token } = await register(email, password);
+      const userData = { name, email, password };
+      const { token } = await register(userData);
       localStorage.setItem("token", token);
       if (onRegisterSuccess) onRegisterSuccess(); // Trigger success callback
     } catch (err) {
@@ -27,6 +29,12 @@ const Register: React.FC<RegisterProps> = ({ onRegisterSuccess }) => {
     <div>
       <h1>Register</h1>
       {error && <p style={{ color: "red" }}>{error}</p>}
+      <input
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Name"
+      />
       <input
         type="email"
         value={email}

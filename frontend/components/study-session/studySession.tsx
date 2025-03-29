@@ -61,11 +61,12 @@ const StudySession: React.FC<StudySessionProps> = ({ deckId }) => {
         setLoading(false);
         setStartTime(Date.now());
         setCardStartTime(Date.now());
+        console.log(startTime, cardStartTime);
       }
     };
 
     initializeStudySession();
-  }, [deckId]);
+  }, [startTime,deckId,cardStartTime]);
 
   const handleCardResult = async (isCorrect: boolean) => {
     if (!sessionId || currentCardIndex >= cards.length) return;

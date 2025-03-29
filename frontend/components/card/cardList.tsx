@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getCardsByDeck, deleteCard } from "../../services/cardService";
 import { Card } from "../../types/cardTypes";
@@ -16,7 +16,7 @@ const CardList: React.FC<CardListProps> = ({ deckId }) => {
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
 
-  const fetchCards = async () => {
+  const fetchCards = useCallback(async () => {
     try {
       setLoading(true);
       console.log("Fetching cards for deck:", deckId);
@@ -40,11 +40,11 @@ const CardList: React.FC<CardListProps> = ({ deckId }) => {
       setLoading(false);
       console.log("Fetch completed, loading state set to false");
     }
-  };
+  },[deckId]);
 
   useEffect(() => {
     fetchCards();
-  }, [deckId]);
+  }, [fetchCards]);
 
   const handleCreateCard = () => {
     router.push(`/decks/${deckId}/cards/new`);
