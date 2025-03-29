@@ -24,7 +24,7 @@ services:
     ports:
       - "5000:5000"
     environment:
-      MONGO_URI: "mongodb://nostoc:gbrgjkhkebrbqj@mongodb:27018"
+      MONGO_URI: "mongodb://nostoc:gbrgjkhkebrbqj@mongodb:27017/memoryball?authSource=admin"
       NODE_ENV: development
     volumes:
       - ./Backend:/home/node/app
