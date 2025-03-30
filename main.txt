@@ -1,0 +1,40 @@
+terraform {
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.0"
+    }
+  }
+}
+
+# Configure the AWS Provider
+provider "aws" {
+  region = "ap-southeast-2"
+}
+
+resource "aws_instance" "memry_ball_test" {
+  ami           = "ami-0a2e29e3b4fc39212"  # Ubuntu 22.04 LTS in ap-southeast-2
+  instance_type = "t2.micro"
+  
+  root_block_device {
+    volume_size = 30 
+    volume_type = "gp2"
+  }
+  
+  tags = {
+    Name = "memory-ball30"
+  }
+}
+
+# Output the public IP address
+output "server_ip" {
+  description = "Public IP address of the EC2 instance"
+  value       = aws_instance.memry_ball_test.public_ip
+}
+
+# Optional: Output the SSH command for easy access
+output "ssh_command" {
+  description = "SSH command to connect to the instance"
+  value       = "ssh -i /path/to/your/key.pem ubuntu@${aws_instance.memry_ball_test.public_ip}"
+  sensitive   = true  # Hides the output from logs
+}
