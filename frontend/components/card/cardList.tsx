@@ -18,26 +18,26 @@ const CardList: React.FC<CardListProps> = ({ deckId }) => {
   const router = useRouter();
 
   const fetchCards = useCallback(async () => {
-    try {
-      setLoading(true);
-      const response = await getCardsByDeck(deckId);
+  try {
+    setLoading(true);
+    const response = await getCardsByDeck(deckId);
 
-      // Access the cards correctly based on the actual API structure
-      if (response?.data?.cards) {
-        setCards(response.data.cards);
-      } else {
-        setCards([]);
-      }
-
-      setError(null);
-    } catch (err) {
-      console.error("Error fetching cards:", err);
-      setError("Failed to load cards. Please try again later.");
-      toast.error("Failed to load cards");
-    } finally {
-      setLoading(false);
+    // Fix: The response is already response.data from the service
+    if (response?.data?.cards) {
+      setCards(response.data.cards);
+    } else {
+      setCards([]);
     }
-  }, [deckId]);
+
+    setError(null);
+  } catch (err) {
+    console.error("Error fetching cards:", err);
+    setError("Failed to load cards. Please try again later.");
+    toast.error("Failed to load cards");
+  } finally {
+    setLoading(false);
+  }
+}, [deckId]);
 
   useEffect(() => {
     fetchCards();
