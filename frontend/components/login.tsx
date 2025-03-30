@@ -2,19 +2,30 @@
 import { useState } from "react";
 import { login } from "../services/authService";
 
+import { useRouter } from "next/navigation";
+
 const Login: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const handleLogin = async () => {
     try {
+      setIsLoading(true);
       const userData = { email, password };
-      const { token } = await login(userData);
-      localStorage.setItem("token", token);
-      alert("Login successful");
+      const response = await login(userData);
+
+      // Use the global login method
+      window.loginUser(response.token, response.user);
+
+      // Redirect to home
+      router.push("/");
     } catch (err) {
-      console.log(err);
-      alert("Login failed");
+      console.error(err);
+      // Error toast is handled in the auth service
+    } finally {
+      setIsLoading(false);
     }
   };
 

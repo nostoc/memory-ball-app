@@ -1,8 +1,8 @@
 "use client";
 import { useState, useEffect } from "react";
-//import { useRouter } from "next/navigation";
 import { getAllUserSessions } from "../../services/studySessionService";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 interface SessionHistoryItem {
   _id: string;
@@ -21,7 +21,6 @@ const SessionHistory: React.FC = () => {
   const [sessions, setSessions] = useState<SessionHistoryItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  //const router = useRouter();
 
   useEffect(() => {
     const fetchSessions = async () => {
@@ -33,12 +32,14 @@ const SessionHistory: React.FC = () => {
           setSessions(response.data.sessions);
         } else {
           setError("Could not load session history");
+          toast.error("Could not load session history");
         }
       } catch (err) {
         console.error("Error fetching sessions:", err);
         setError(
           "Failed to load your session history. Please try again later."
         );
+        toast.error("Failed to load your session history");
       } finally {
         setLoading(false);
       }
@@ -84,8 +85,10 @@ const SessionHistory: React.FC = () => {
     return (
       <div className="flex justify-center items-center min-h-[60vh]">
         <div className="flex flex-col items-center space-y-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-          <p className="text-gray-600">Loading your session history...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-oceanBlue"></div>
+          <p className="text-white font-montserrat">
+            Loading your session history...
+          </p>
         </div>
       </div>
     );
@@ -94,9 +97,27 @@ const SessionHistory: React.FC = () => {
   if (error) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-lg mb-6">
+        <div className="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-[22px] mb-6 font-montserrat">
           <p>{error}</p>
         </div>
+        <Link
+          href="/decks"
+          className="text-oceanBlue hover:text-button font-montserrat flex items-center transition-colors"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-5 w-5 mr-2"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fillRule="evenodd"
+              d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z"
+              clipRule="evenodd"
+            />
+          </svg>
+          Return to Decks
+        </Link>
       </div>
     );
   }
@@ -104,12 +125,14 @@ const SessionHistory: React.FC = () => {
   if (sessions.length === 0) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-gray-800 mb-8">Study History</h1>
+        <h1 className="text-3xl font-bold text-white mb-8 font-bricolage">
+          Study History
+        </h1>
 
-        <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 p-8 text-center">
+        <div className="bg-white rounded-[22px] shadow-md overflow-hidden border border-gray-200 p-8 text-center">
           <div className="mb-4">
             <svg
-              className="h-16 w-16 text-gray-400 mx-auto"
+              className="h-16 w-16 text-oceanBlue/40 mx-auto"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -122,20 +145,20 @@ const SessionHistory: React.FC = () => {
               />
             </svg>
           </div>
-          <h2 className="text-xl font-semibold text-gray-800 mb-2">
+          <h2 className="text-xl font-semibold text-title mb-2 font-bricolage">
             No Study Sessions Yet
           </h2>
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-600 mb-6 font-montserrat">
             You haven&apos;t completed any study sessions yet.
           </p>
           <Link
             href="/decks"
-            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-md 
-                   transition duration-200 inline-flex items-center"
+            className="bg-oceanBlue hover:bg-button text-white font-poppins py-2 px-6 rounded-[22px] 
+                   transition duration-200 inline-flex items-center shadow-md"
           >
             Browse Your Decks
             <svg
-              className="h-5 w-5 ml-1"
+              className="h-5 w-5 ml-2"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -156,50 +179,52 @@ const SessionHistory: React.FC = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800">Study History</h1>
-        <p className="text-gray-600 mt-2">
+        <h1 className="text-3xl font-bold text-white font-bricolage">
+          Study History
+        </h1>
+        <p className="text-gray-300 mt-2 font-montserrat">
           Review all your past study sessions
         </p>
       </div>
 
-      <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+      <div className="bg-white rounded-[22px] shadow-md overflow-hidden border border-gray-200">
         <div className="overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+            <thead className="bg-gray-50 ">
               <tr>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-bold text-gray-800 uppercase tracking-wider font-montserrat"
                 >
                   Deck
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-bold text-gray-800 uppercase tracking-wider font-montserrat"
                 >
                   Date
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-bold text-gray-800 uppercase tracking-wider font-montserrat"
                 >
                   Cards
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-bold text-gray-800 uppercase tracking-wider font-montserrat"
                 >
                   Success Rate
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-3 text-left text-xs font-bold text-gray-800 uppercase tracking-wider font-montserrat"
                 >
                   Duration
                 </th>
                 <th
                   scope="col"
-                  className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider"
+                  className="px-6 py-3 text-right text-xs font-bold text-gray-800 uppercase tracking-wider font-montserrat"
                 >
                   Actions
                 </th>
@@ -209,23 +234,23 @@ const SessionHistory: React.FC = () => {
               {sessions.map((session) => (
                 <tr key={session._id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm font-medium text-gray-900">
+                    <div className="text-sm font-medium text-title font-montserrat">
                       {session.deck.title}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-500">
+                    <div className="text-sm text-gray-500 font-montserrat">
                       {formatDate(session.startTime)}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-900">
+                    <div className="text-sm text-title font-montserrat">
                       {session.cardsStudied}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
                     <span
-                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
+                      className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium font-montserrat
                       ${
                         parseInt(
                           getSuccessRate(
@@ -251,14 +276,14 @@ const SessionHistory: React.FC = () => {
                     </span>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
-                    <div className="text-sm text-gray-500">
+                    <div className="text-sm text-gray-500 font-montserrat">
                       {calculateDuration(session.startTime, session.endTime)}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <Link
                       href={`/sessions/${session._id}`}
-                      className="text-blue-600 hover:text-blue-900"
+                      className="text-oceanBlue hover:text-button transition-colors font-poppins"
                     >
                       View Details
                     </Link>

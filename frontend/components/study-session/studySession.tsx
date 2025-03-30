@@ -11,7 +11,7 @@ import {
 } from "../../services/studySessionService";
 import StudyCard from "./studyCard";
 import StudySummary from "./studySummary";
-//import Link from "next/link";
+import toast from "react-hot-toast";
 
 interface StudySessionProps {
   deckId: string;
@@ -24,7 +24,7 @@ const StudySession: React.FC<StudySessionProps> = ({ deckId }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [isFinished, setIsFinished] = useState(false);
-  const [startTime, setStartTime] = useState(Date.now());
+  const [, setStartTime] = useState(Date.now());
   const [cardStartTime, setCardStartTime] = useState(Date.now());
   const [sessionSummary, setSessionSummary] = useState<Session | null>(null);
   const [showAnswer, setShowAnswer] = useState(false);
@@ -40,8 +40,10 @@ const StudySession: React.FC<StudySessionProps> = ({ deckId }) => {
 
         if (cardsResponse?.data?.cards && cardsResponse.data.cards.length > 0) {
           setCards(cardsResponse.data.cards);
+          toast.success("Study session loaded successfully");
         } else {
           setError("No cards available for study in this deck.");
+          toast.error("No cards available for study");
           setLoading(false);
           return;
         }
@@ -53,20 +55,23 @@ const StudySession: React.FC<StudySessionProps> = ({ deckId }) => {
           setSessionId(sessionResponse.data.session._id);
         } else {
           setError("Failed to start study session.");
+          toast.error("Failed to start study session");
         }
       } catch (err) {
         console.error("Error initializing study session:", err);
         setError("Failed to initialize study session. Please try again.");
+        toast.error("Failed to initialize study session");
       } finally {
         setLoading(false);
-        setStartTime(Date.now());
-        setCardStartTime(Date.now());
-        console.log(startTime, cardStartTime);
       }
     };
 
     initializeStudySession();
-  }, [startTime,deckId,cardStartTime]);
+
+    // Set these once when the effect runs, not in the async function
+    setStartTime(Date.now());
+    setCardStartTime(Date.now());
+  }, [deckId]);
 
   const handleCardResult = async (isCorrect: boolean) => {
     if (!sessionId || currentCardIndex >= cards.length) return;
@@ -88,6 +93,7 @@ const StudySession: React.FC<StudySessionProps> = ({ deckId }) => {
       }
     } catch (err) {
       console.error("Error recording card result:", err);
+      toast.error("Error recording result, but continuing");
 
       // Move on anyway
       if (currentCardIndex < cards.length - 1) {
@@ -112,9 +118,11 @@ const StudySession: React.FC<StudySessionProps> = ({ deckId }) => {
 
       if (response?.data?.session) {
         setSessionSummary(response.data.session);
+        toast.success("Study session completed!");
       }
     } catch (err) {
       console.error("Error ending study session:", err);
+      toast.error("Error ending session, but showing summary");
     }
 
     setIsFinished(true);
@@ -128,8 +136,8 @@ const StudySession: React.FC<StudySessionProps> = ({ deckId }) => {
     return (
       <div className="flex justify-center items-center min-h-[60vh]">
         <div className="flex flex-col items-center space-y-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-          <p className="text-gray-600">Loading study session...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-oceanBlue"></div>
+          <p className="text-white font-montserrat">Loading study session...</p>
         </div>
       </div>
     );
@@ -138,13 +146,13 @@ const StudySession: React.FC<StudySessionProps> = ({ deckId }) => {
   if (error) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-12 flex flex-col items-center">
-        <div className="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-lg mb-6 w-full max-w-md text-center">
+        <div className="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-[22px] mb-6 w-full max-w-md text-center font-montserrat">
           <p>{error}</p>
         </div>
         <button
           onClick={handleBackToDeck}
-          className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-md 
-                   transition duration-200 flex items-center"
+          className="bg-oceanBlue hover:bg-button text-white font-poppins py-2 px-6 rounded-[22px] 
+                   transition duration-200 flex items-center shadow-md"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -173,13 +181,13 @@ const StudySession: React.FC<StudySessionProps> = ({ deckId }) => {
   if (cards.length === 0) {
     return (
       <div className="max-w-4xl mx-auto px-4 py-12 flex flex-col items-center">
-        <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 px-6 py-4 rounded-lg mb-6 w-full max-w-md text-center">
+        <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 px-6 py-4 rounded-[22px] mb-6 w-full max-w-md text-center font-montserrat">
           <p>No cards available for study in this deck.</p>
         </div>
         <button
           onClick={handleBackToDeck}
-          className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-md 
-                   transition duration-200 flex items-center"
+          className="bg-oceanBlue hover:bg-button text-white font-poppins py-2 px-6 rounded-[22px] 
+                   transition duration-200 flex items-center shadow-md"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -204,8 +212,7 @@ const StudySession: React.FC<StudySessionProps> = ({ deckId }) => {
       <div className="flex justify-between items-center mb-6">
         <button
           onClick={handleBackToDeck}
-          className="text-gray-600 hover:text-blue-600 font-medium py-2 px-3 rounded-md 
-                   hover:bg-gray-100 transition-colors flex items-center"
+          className="text-oceanBlue hover:text-button font-montserrat flex items-center transition-colors"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -225,11 +232,11 @@ const StudySession: React.FC<StudySessionProps> = ({ deckId }) => {
         <div className="flex items-center space-x-2">
           <div className="bg-gray-200 h-1.5 w-48 sm:w-64 rounded-full overflow-hidden">
             <div
-              className="bg-blue-500 h-full transition-all duration-500 ease-out"
+              className="bg-oceanBlue h-full transition-all duration-500 ease-out"
               style={{ width: `${(currentCardIndex / cards.length) * 100}%` }}
             ></div>
           </div>
-          <span className="text-sm text-gray-600 font-medium">
+          <span className="text-sm text-white font-montserrat">
             {currentCardIndex + 1}/{cards.length}
           </span>
         </div>
@@ -243,8 +250,8 @@ const StudySession: React.FC<StudySessionProps> = ({ deckId }) => {
         <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
           <button
             onClick={() => handleCardResult(false)}
-            className="bg-red-500 hover:bg-red-600 text-white font-medium py-3 px-8 rounded-md 
-                     transition duration-200 flex-1 sm:flex-initial flex items-center justify-center"
+            className="bg-red-500 hover:bg-red-600 text-white font-poppins py-3 px-8 rounded-[22px] 
+                     transition duration-200 shadow-md flex-1 sm:flex-initial flex items-center justify-center"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -262,8 +269,8 @@ const StudySession: React.FC<StudySessionProps> = ({ deckId }) => {
           </button>
           <button
             onClick={() => handleCardResult(true)}
-            className="bg-green-500 hover:bg-green-600 text-white font-medium py-3 px-8 rounded-md 
-                     transition duration-200 flex-1 sm:flex-initial flex items-center justify-center"
+            className="bg-green-500 hover:bg-green-600 text-white font-poppins py-3 px-8 rounded-[22px] 
+                     transition duration-200 shadow-md flex-1 sm:flex-initial flex items-center justify-center"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -284,8 +291,8 @@ const StudySession: React.FC<StudySessionProps> = ({ deckId }) => {
         <div className="flex justify-center">
           <button
             onClick={handleFlipCard}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-8 rounded-md 
-                     transition duration-200 flex items-center justify-center"
+            className="bg-oceanBlue hover:bg-button text-white font-poppins py-3 px-8 rounded-[22px] 
+                     transition duration-200 shadow-md flex items-center justify-center"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

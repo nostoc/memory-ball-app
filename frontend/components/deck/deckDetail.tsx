@@ -7,6 +7,7 @@ import {
   deleteDeck,
 } from "../../services/deckService";
 import { Deck } from "../../types/deckTypes";
+import toast from "react-hot-toast";
 
 interface DeckDetailProps {
   deckId: string;
@@ -38,6 +39,7 @@ const DeckDetail: React.FC<DeckDetailProps> = ({ deckId }) => {
       } catch (err) {
         console.error("Error fetching deck data:", err);
         setError("Failed to load deck. Please try again later.");
+        toast.error("Failed to load deck data");
       } finally {
         setLoading(false);
       }
@@ -58,10 +60,12 @@ const DeckDetail: React.FC<DeckDetailProps> = ({ deckId }) => {
     ) {
       try {
         await deleteDeck(deckId);
+        toast.success("Deck deleted successfully");
         router.push("/decks");
       } catch (err) {
         console.error("Error deleting deck:", err);
         setError("Failed to delete deck. Please try again.");
+        toast.error("Failed to delete deck");
       }
     }
   };
@@ -77,19 +81,19 @@ const DeckDetail: React.FC<DeckDetailProps> = ({ deckId }) => {
   if (loading)
     return (
       <div className="flex justify-center items-center min-h-[60vh]">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-oceanBlue"></div>
       </div>
     );
 
   if (error)
     return (
       <div className="max-w-4xl mx-auto px-4 py-8">
-        <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-md">
+        <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-[22px] font-montserrat">
           {error}
         </div>
         <button
           onClick={() => router.push("/decks")}
-          className="mt-4 text-blue-600 hover:text-blue-800 font-medium flex items-center"
+          className="mt-4 text-oceanBlue hover:text-button font-montserrat flex items-center"
         >
           ← Back to Decks
         </button>
@@ -99,12 +103,12 @@ const DeckDetail: React.FC<DeckDetailProps> = ({ deckId }) => {
   if (!deck)
     return (
       <div className="max-w-4xl mx-auto px-4 py-8">
-        <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 px-4 py-3 rounded-md">
+        <div className="bg-yellow-50 border border-yellow-200 text-yellow-800 px-4 py-3 rounded-[22px] font-montserrat">
           Deck not found
         </div>
         <button
           onClick={() => router.push("/decks")}
-          className="mt-4 text-blue-600 hover:text-blue-800 font-medium flex items-center"
+          className="mt-4 text-oceanBlue hover:text-button font-montserrat flex items-center"
         >
           ← Back to Decks
         </button>
@@ -115,7 +119,7 @@ const DeckDetail: React.FC<DeckDetailProps> = ({ deckId }) => {
     <div className="max-w-4xl mx-auto px-4 py-8">
       <button
         onClick={() => router.push("/decks")}
-        className="mb-6 text-blue-600 hover:text-blue-800 font-medium flex items-center"
+        className="mb-6 text-oceanBlue hover:text-button font-montserrat flex items-center transition-colors"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -132,12 +136,14 @@ const DeckDetail: React.FC<DeckDetailProps> = ({ deckId }) => {
         Back to Decks
       </button>
 
-      <div className="bg-white shadow-md rounded-lg overflow-hidden border border-gray-200">
+      <div className="bg-white shadow-md rounded-[22px] overflow-hidden border border-gray-200">
         <div className="p-6">
           <div className="flex items-start justify-between mb-4">
-            <h1 className="text-3xl font-bold text-gray-800">{deck.title}</h1>
+            <h1 className="text-3xl font-bold text-title font-bricolage">
+              {deck.title}
+            </h1>
             <span
-              className={`text-sm font-medium px-3 py-1 rounded-full ${
+              className={`text-sm font-medium px-3 py-1 rounded-full font-montserrat ${
                 deck.isPublic
                   ? "bg-green-100 text-green-800"
                   : "bg-gray-100 text-gray-800"
@@ -147,7 +153,7 @@ const DeckDetail: React.FC<DeckDetailProps> = ({ deckId }) => {
             </span>
           </div>
 
-          <p className="text-gray-600 mb-6">
+          <p className="text-gray-600 mb-6 font-montserrat">
             {deck.description || "No description provided"}
           </p>
 
@@ -156,7 +162,7 @@ const DeckDetail: React.FC<DeckDetailProps> = ({ deckId }) => {
               {deck.tags.map((tag, idx) => (
                 <span
                   key={idx}
-                  className="bg-blue-50 text-blue-700 text-xs px-2 py-1 rounded-full"
+                  className="bg-blue-50 text-oceanBlue text-xs px-2 py-1 rounded-full font-montserrat"
                 >
                   {tag}
                 </span>
@@ -164,22 +170,28 @@ const DeckDetail: React.FC<DeckDetailProps> = ({ deckId }) => {
             </div>
           )}
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-gray-50 p-4 rounded-md">
-            <div className="flex flex-col items-center p-3 bg-white rounded-md shadow-sm border border-gray-100">
-              <span className="text-lg font-semibold text-blue-600">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 bg-gray-50 p-4 rounded-[22px]">
+            <div className="flex flex-col items-center p-3 bg-white rounded-[22px] shadow-sm border border-gray-100">
+              <span className="text-lg font-semibold text-oceanBlue font-bricolage">
                 {stats?.cardCount || 0}
               </span>
-              <span className="text-gray-500 text-sm">Cards</span>
+              <span className="text-gray-500 text-sm font-montserrat">
+                Cards
+              </span>
             </div>
-            <div className="flex flex-col items-center p-3 bg-white rounded-md shadow-sm border border-gray-100">
-              <span className="text-gray-600 text-sm">Created</span>
-              <span className="text-gray-900">
+            <div className="flex flex-col items-center p-3 bg-white rounded-[22px] shadow-sm border border-gray-100">
+              <span className="text-gray-600 text-sm font-montserrat">
+                Created
+              </span>
+              <span className="text-gray-900 font-montserrat">
                 {new Date(deck.createdAt).toLocaleDateString()}
               </span>
             </div>
-            <div className="flex flex-col items-center p-3 bg-white rounded-md shadow-sm border border-gray-100">
-              <span className="text-gray-600 text-sm">Last Updated</span>
-              <span className="text-gray-900">
+            <div className="flex flex-col items-center p-3 bg-white rounded-[22px] shadow-sm border border-gray-100">
+              <span className="text-gray-600 text-sm font-montserrat">
+                Last Updated
+              </span>
+              <span className="text-gray-900 font-montserrat">
                 {new Date(deck.updatedAt).toLocaleDateString()}
               </span>
             </div>
@@ -190,13 +202,26 @@ const DeckDetail: React.FC<DeckDetailProps> = ({ deckId }) => {
           <button
             onClick={handleStudyDeck}
             disabled={stats?.cardCount === 0}
-            className="button-primary"
+            className={`flex-1 py-2 px-4 rounded-[22px] transition-colors shadow-md flex items-center justify-center font-poppins 
+              ${
+                stats?.cardCount === 0
+                  ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                  : "bg-oceanBlue hover:bg-button text-white"
+              }`}
           >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5 mr-2"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
+            </svg>
             Study Deck
           </button>
           <button
             onClick={handleManageCards}
-            className="flex-1 py-2 px-4 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-md transition-colors flex items-center justify-center"
+            className="flex-1 py-2 px-4 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-[22px] transition-colors shadow-md flex items-center justify-center font-poppins"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -214,7 +239,7 @@ const DeckDetail: React.FC<DeckDetailProps> = ({ deckId }) => {
       <div className="mt-6 flex justify-end space-x-4">
         <button
           onClick={handleEdit}
-          className="text-gray-600 hover:text-gray-800 font-medium flex items-center"
+          className="py-2 px-4 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded-[22px] transition-colors shadow-sm flex items-center font-poppins"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -228,7 +253,7 @@ const DeckDetail: React.FC<DeckDetailProps> = ({ deckId }) => {
         </button>
         <button
           onClick={handleDelete}
-          className="text-red-600 hover:text-red-800 font-medium flex items-center"
+          className="py-2 px-4 bg-red-500 hover:bg-red-600 text-white rounded-[22px] transition-colors shadow-sm flex items-center font-poppins"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

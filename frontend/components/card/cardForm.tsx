@@ -8,6 +8,7 @@ import {
 } from "../../services/cardService";
 import { CardFormData } from "../../types/cardTypes";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 interface CardFormProps {
   deckId: string;
@@ -44,9 +45,11 @@ const CardForm: React.FC<CardFormProps> = ({ deckId, cardId }) => {
           answer: card.answer,
           deck: deckId,
         });
+        toast.success("Card loaded successfully");
       } catch (err) {
         console.error("Error fetching card:", err);
         setError("Failed to load card data. Please try again.");
+        toast.error("Failed to load card data");
       } finally {
         setLoading(false);
       }
@@ -78,15 +81,18 @@ const CardForm: React.FC<CardFormProps> = ({ deckId, cardId }) => {
           question: formData.question,
           answer: formData.answer,
         });
+        toast.success("Card updated successfully");
       } else {
         // Create new card
         await createCard(formData);
+        toast.success("Card created successfully");
       }
 
       router.push(`/decks/${deckId}/cards`);
     } catch (err) {
       console.error("Error saving card:", err);
       setError("Failed to save card. Please try again.");
+      toast.error("Failed to save card");
     } finally {
       setLoading(false);
     }
@@ -99,7 +105,7 @@ const CardForm: React.FC<CardFormProps> = ({ deckId, cardId }) => {
   if (loading && cardId)
     return (
       <div className="flex justify-center items-center min-h-[50vh]">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-oceanBlue"></div>
       </div>
     );
 
@@ -108,7 +114,7 @@ const CardForm: React.FC<CardFormProps> = ({ deckId, cardId }) => {
       <div className="flex justify-between items-center mb-6">
         <Link
           href={`/decks/${deckId}/cards`}
-          className="text-blue-600 hover:text-blue-800 font-medium flex items-center"
+          className="text-oceanBlue hover:text-button font-montserrat flex items-center transition-colors"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -127,10 +133,10 @@ const CardForm: React.FC<CardFormProps> = ({ deckId, cardId }) => {
       </div>
 
       <div className="mb-6">
-        <h1 className="text-3xl font-bold text-gray-800">
+        <h1 className="text-3xl font-bold text-white font-bricolage">
           {cardId ? "Edit Card" : "Create New Card"}
         </h1>
-        <p className="text-gray-600 mt-2">
+        <p className="text-gray-300 mt-2 font-montserrat">
           {cardId
             ? "Update your flashcard content"
             : "Create a new flashcard for your deck"}
@@ -138,7 +144,7 @@ const CardForm: React.FC<CardFormProps> = ({ deckId, cardId }) => {
       </div>
 
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-md mb-6">
+        <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-[22px] mb-6 font-montserrat">
           {error}
         </div>
       )}
@@ -147,12 +153,12 @@ const CardForm: React.FC<CardFormProps> = ({ deckId, cardId }) => {
         <div>
           <form
             onSubmit={handleSubmit}
-            className="bg-white shadow-md rounded-lg p-6 border border-gray-200"
+            className="bg-white shadow-md rounded-[22px] p-6 border border-gray-200"
           >
             <div className="mb-5">
               <label
                 htmlFor="question"
-                className="block text-gray-700 font-medium mb-2"
+                className="block text-title font-medium mb-2 font-montserrat"
               >
                 Question
               </label>
@@ -163,7 +169,7 @@ const CardForm: React.FC<CardFormProps> = ({ deckId, cardId }) => {
                 onChange={handleChange}
                 required
                 rows={5}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-[22px] focus:outline-none focus:ring-2 focus:ring-oceanBlue focus:border-transparent font-montserrat"
                 placeholder="Enter the question"
               />
             </div>
@@ -171,7 +177,7 @@ const CardForm: React.FC<CardFormProps> = ({ deckId, cardId }) => {
             <div className="mb-6">
               <label
                 htmlFor="answer"
-                className="block text-gray-700 font-medium mb-2"
+                className="block text-title font-medium mb-2 font-montserrat"
               >
                 Answer
               </label>
@@ -182,7 +188,7 @@ const CardForm: React.FC<CardFormProps> = ({ deckId, cardId }) => {
                 onChange={handleChange}
                 required
                 rows={5}
-                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                className="w-full px-4 py-2 border border-gray-300 rounded-[22px] focus:outline-none focus:ring-2 focus:ring-oceanBlue focus:border-transparent font-montserrat"
                 placeholder="Enter the answer"
               />
             </div>
@@ -191,15 +197,15 @@ const CardForm: React.FC<CardFormProps> = ({ deckId, cardId }) => {
               <button
                 type="button"
                 onClick={() => router.push(`/decks/${deckId}/cards`)}
-                className="px-4 py-2 text-gray-700 border border-gray-300 rounded-md hover:bg-gray-50 transition-colors"
+                className="px-4 py-2 text-gray-700 border border-gray-300 rounded-[22px] hover:bg-gray-50 transition-colors font-poppins"
               >
                 Cancel
               </button>
               <button
                 type="submit"
                 disabled={loading}
-                className={`px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors 
-                       flex items-center justify-center ${
+                className={`px-6 py-2 bg-oceanBlue hover:bg-button text-white rounded-[22px] transition-colors 
+                       flex items-center justify-center shadow-md font-poppins ${
                          loading ? "opacity-70 cursor-not-allowed" : ""
                        }`}
               >
@@ -220,18 +226,18 @@ const CardForm: React.FC<CardFormProps> = ({ deckId, cardId }) => {
 
         {/* Card Preview */}
         <div className="hidden md:block">
-          <div className="bg-white shadow-md rounded-lg p-4 border border-gray-200 h-full">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4">
+          <div className="bg-white shadow-md rounded-[22px] p-6 border border-gray-200 h-full">
+            <h2 className="text-lg font-semibold text-title mb-4 font-bricolage">
               Card Preview
             </h2>
 
             <div className="flex justify-center mb-4">
-              <div className="inline-flex rounded-md overflow-hidden">
+              <div className="inline-flex rounded-[22px] overflow-hidden">
                 <button
                   onClick={() => setPreviewMode("question")}
-                  className={`px-4 py-2 text-sm font-medium ${
+                  className={`px-4 py-2 text-sm font-poppins ${
                     previewMode === "question"
-                      ? "bg-blue-600 text-white"
+                      ? "bg-oceanBlue text-white"
                       : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                   }`}
                 >
@@ -239,9 +245,9 @@ const CardForm: React.FC<CardFormProps> = ({ deckId, cardId }) => {
                 </button>
                 <button
                   onClick={() => setPreviewMode("answer")}
-                  className={`px-4 py-2 text-sm font-medium ${
+                  className={`px-4 py-2 text-sm font-poppins ${
                     previewMode === "answer"
-                      ? "bg-blue-600 text-white"
+                      ? "bg-oceanBlue text-white"
                       : "bg-gray-100 text-gray-700 hover:bg-gray-200"
                   }`}
                 >
@@ -250,12 +256,12 @@ const CardForm: React.FC<CardFormProps> = ({ deckId, cardId }) => {
               </div>
             </div>
 
-            <div className="relative bg-gray-50 rounded-lg p-4 min-h-[250px] flex flex-col">
+            <div className="relative bg-gray-50 rounded-[22px] p-6 min-h-[250px] flex flex-col shadow-sm">
               <div className="mb-2">
                 <h3
-                  className={`text-sm font-medium ${
+                  className={`text-sm font-medium font-montserrat ${
                     previewMode === "question"
-                      ? "text-blue-600"
+                      ? "text-oceanBlue"
                       : "text-green-600"
                   }`}
                 >
@@ -263,7 +269,7 @@ const CardForm: React.FC<CardFormProps> = ({ deckId, cardId }) => {
                 </h3>
               </div>
               <div className="flex-grow">
-                <p className="text-gray-800">
+                <p className="text-gray-800 font-montserrat">
                   {previewMode === "question"
                     ? formData.question || "Your question will appear here"
                     : formData.answer || "Your answer will appear here"}
@@ -273,7 +279,7 @@ const CardForm: React.FC<CardFormProps> = ({ deckId, cardId }) => {
                 <button
                   type="button"
                   onClick={togglePreviewMode}
-                  className="text-xs text-blue-500 italic inline-flex items-center justify-center"
+                  className="text-xs text-oceanBlue hover:text-button italic inline-flex items-center justify-center transition-colors font-montserrat"
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -294,7 +300,7 @@ const CardForm: React.FC<CardFormProps> = ({ deckId, cardId }) => {
               </div>
             </div>
 
-            <p className="text-xs text-gray-500 mt-4 text-center">
+            <p className="text-xs text-gray-500 mt-4 text-center font-montserrat">
               This is a preview of how your card will appear when studying
             </p>
           </div>
