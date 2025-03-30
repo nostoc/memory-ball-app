@@ -23,25 +23,31 @@ const CardItem: React.FC<CardItemProps> = ({ card, onEdit, onDelete }) => {
 
   return (
     <div className="mb-6">
-      <div className="card-container h-[200px] mb-2">
+      <div className="card-container h-[220px] mb-3">
         <div
           className={`card h-full cursor-pointer ${isFlipped ? "flipped" : ""}`}
           onClick={handleFlip}
         >
           {/* Question Side (Front) */}
-          <div className="card-front bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 p-5">
+          <div className="card-front bg-white rounded-[22px] shadow-md overflow-hidden border border-gray-200 p-5">
             <div className="flex flex-col h-full">
               <div className="flex justify-between items-start mb-2">
-                <h3 className="text-blue-600 text-sm font-medium">Question</h3>
-                <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
-                  Difficulty: {card.difficulty}
-                </span>
+                <h3 className="text-oceanBlue text-sm font-medium font-montserrat">
+                  Question
+                </h3>
+                {card.difficulty && (
+                  <span className="text-xs text-gray-500 bg-gray-100 px-2 py-1 rounded-full font-montserrat">
+                    Difficulty: {card.difficulty}
+                  </span>
+                )}
               </div>
               <div className="flex-grow overflow-auto">
-                <p className="text-gray-800 text-lg">{card.question}</p>
+                <p className="text-title text-lg font-montserrat">
+                  {card.question}
+                </p>
               </div>
               <div className="mt-3 flex justify-center">
-                <span className="text-xs text-blue-500 italic flex items-center">
+                <span className="text-xs text-oceanBlue hover:text-button italic flex items-center transition-colors font-montserrat">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-4 w-4 mr-1"
@@ -63,16 +69,20 @@ const CardItem: React.FC<CardItemProps> = ({ card, onEdit, onDelete }) => {
           </div>
 
           {/* Answer Side (Back) */}
-          <div className="card-back bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 p-5">
+          <div className="card-back bg-white rounded-[22px] shadow-md overflow-hidden border border-gray-200 p-5">
             <div className="flex flex-col h-full">
               <div className="mb-2">
-                <h3 className="text-green-600 text-sm font-medium">Answer</h3>
+                <h3 className="text-green-600 text-sm font-medium font-montserrat">
+                  Answer
+                </h3>
               </div>
               <div className="flex-grow overflow-auto">
-                <p className="text-gray-800 text-lg">{card.answer}</p>
+                <p className="text-title text-lg font-montserrat">
+                  {card.answer}
+                </p>
               </div>
               <div className="mt-3 flex justify-center">
-                <span className="text-xs text-blue-500 italic flex items-center">
+                <span className="text-xs text-oceanBlue hover:text-button italic flex items-center transition-colors font-montserrat">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-4 w-4 mr-1"
@@ -98,7 +108,7 @@ const CardItem: React.FC<CardItemProps> = ({ card, onEdit, onDelete }) => {
       <div className="flex justify-end space-x-2 mt-2">
         <button
           onClick={(e) => handleButtonClick(e, onEdit)}
-          className="text-gray-600 hover:text-blue-600 text-sm font-medium px-3 py-1 rounded hover:bg-gray-100 transition-colors flex items-center"
+          className="text-gray-700 hover:text-oceanBlue text-sm font-poppins px-3 py-1 rounded-[22px] hover:bg-gray-100 transition-colors flex items-center shadow-sm"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -118,7 +128,7 @@ const CardItem: React.FC<CardItemProps> = ({ card, onEdit, onDelete }) => {
         </button>
         <button
           onClick={(e) => handleButtonClick(e, onDelete)}
-          className="text-gray-600 hover:text-red-600 text-sm font-medium px-3 py-1 rounded hover:bg-red-50 transition-colors flex items-center"
+          className="text-gray-700 hover:text-red-600 text-sm font-poppins px-3 py-1 rounded-[22px] hover:bg-red-50 transition-colors flex items-center shadow-sm"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -137,6 +147,37 @@ const CardItem: React.FC<CardItemProps> = ({ card, onEdit, onDelete }) => {
           Delete
         </button>
       </div>
+
+      {/* CSS for the 3D flip effect */}
+      <style jsx>{`
+        .card-container {
+          perspective: 1000px;
+        }
+
+        .card {
+          transition: transform 0.6s;
+          transform-style: preserve-3d;
+          position: relative;
+        }
+
+        .card-front,
+        .card-back {
+          backface-visibility: hidden;
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+        }
+
+        .card-back {
+          transform: rotateY(180deg);
+        }
+
+        .card.flipped {
+          transform: rotateY(180deg);
+        }
+      `}</style>
     </div>
   );
 };

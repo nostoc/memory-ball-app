@@ -4,9 +4,8 @@ import "../globals.css";
 import Header from "@/components/shared/Header";
 import { AuthProvider } from "@/context/AuthContext";
 import Footer from "@/components/shared/Footer";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import AuthInitializer from "@/components/shared/authInitializer";
+import { Toaster } from "react-hot-toast";
 
 const montserrat = localFont({
   src: [
@@ -89,17 +88,47 @@ export default function RootLayout({
             <Header />
             {children}
             <Footer />
-            <ToastContainer
+            <Toaster
               position="top-right"
-              autoClose={3000}
-              hideProgressBar={false}
-              newestOnTop
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
+              toastOptions={{
+                // Default styles for all toasts
+                style: {
+                  background: "#fff",
+                  color: "#333",
+                  fontFamily: "var(--font-montserrat)",
+                  boxShadow: "0 4px 12px rgba(0, 0, 0, 0.1)",
+                  borderRadius: "8px",
+                  padding: "16px",
+                },
+                // Custom styles for specific toast types
+                success: {
+                  iconTheme: {
+                    primary: "#2CB7BE", // oceanBlue from your theme
+                    secondary: "#fff",
+                  },
+                  style: {
+                    border: "1px solid rgba(44, 183, 190, 0.2)",
+                    borderLeft: "6px solid #2CB7BE",
+                  },
+                },
+                error: {
+                  iconTheme: {
+                    primary: "#E53E3E",
+                    secondary: "#fff",
+                  },
+                  style: {
+                    border: "1px solid rgba(229, 62, 62, 0.2)",
+                    borderLeft: "6px solid #E53E3E",
+                  },
+                },
+                loading: {
+                  iconTheme: {
+                    primary: "#2E4057", // background color from your theme
+                    secondary: "#fff",
+                  },
+                },
+                duration: 4000, // Toast duration in ms
+              }}
             />
           </AuthInitializer>
         </AuthProvider>

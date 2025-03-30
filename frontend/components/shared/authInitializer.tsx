@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { getCurrentUser } from "@/services/authService";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { useRouter, usePathname } from "next/navigation";
 
 // You can expand this interface based on your user data structure
@@ -74,18 +74,18 @@ const AuthInitializer: React.FC<AuthInitializerProps> = ({ children }) => {
   }, [pathname, router]);
 
   // Add global methods for login/logout
-  window.loginUser = (token: string, user: User) => {
-    localStorage.setItem("token", token);
-    AuthState.user = user;
-    AuthState.isAuthenticated = true;
-    toast.success("Successfully logged in!");
-  };
+ window.loginUser = (token: string, user: User) => {
+   localStorage.setItem("token", token);
+   AuthState.user = user;
+   AuthState.isAuthenticated = true;
+   toast.success("Successfully logged in!");
+ };
 
   window.logoutUser = () => {
     localStorage.removeItem("token");
     AuthState.user = null;
     AuthState.isAuthenticated = false;
-    toast.success("Successfully logged out!");
+    
   };
 
   // Show nothing until auth is initialized

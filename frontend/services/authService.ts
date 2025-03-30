@@ -3,8 +3,6 @@ import {
   RegisterCredentials,
   AuthResponse,
 } from "../types/authTypes";
-
-
 import api from "@/utils/api";
 
 

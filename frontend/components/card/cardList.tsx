@@ -5,6 +5,7 @@ import { getCardsByDeck, deleteCard } from "../../services/cardService";
 import { Card } from "../../types/cardTypes";
 import CardItem from "./cardItem";
 import Link from "next/link";
+import toast from "react-hot-toast";
 
 interface CardListProps {
   deckId: string;
@@ -19,16 +20,12 @@ const CardList: React.FC<CardListProps> = ({ deckId }) => {
   const fetchCards = useCallback(async () => {
     try {
       setLoading(true);
-      console.log("Fetching cards for deck:", deckId);
       const response = await getCardsByDeck(deckId);
-      console.log("Full API response:", response);
 
       // Access the cards correctly based on the actual API structure
       if (response?.data?.cards) {
-        console.log("Found cards array:", response.data.cards);
         setCards(response.data.cards);
       } else {
-        console.warn("Cards array not found in expected location:", response);
         setCards([]);
       }
 
@@ -36,11 +33,11 @@ const CardList: React.FC<CardListProps> = ({ deckId }) => {
     } catch (err) {
       console.error("Error fetching cards:", err);
       setError("Failed to load cards. Please try again later.");
+      toast.error("Failed to load cards");
     } finally {
       setLoading(false);
-      console.log("Fetch completed, loading state set to false");
     }
-  },[deckId]);
+  }, [deckId]);
 
   useEffect(() => {
     fetchCards();
@@ -58,10 +55,12 @@ const CardList: React.FC<CardListProps> = ({ deckId }) => {
     if (window.confirm("Are you sure you want to delete this card?")) {
       try {
         await deleteCard(cardId);
+        toast.success("Card deleted successfully");
         fetchCards(); // Refresh list after deletion
       } catch (err) {
         console.error("Error deleting card:", err);
         setError("Failed to delete card. Please try again.");
+        toast.error("Failed to delete card");
       }
     }
   };
@@ -69,19 +68,19 @@ const CardList: React.FC<CardListProps> = ({ deckId }) => {
   if (loading)
     return (
       <div className="flex justify-center items-center min-h-[50vh]">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-oceanBlue"></div>
       </div>
     );
 
   if (error)
     return (
       <div className="max-w-4xl mx-auto px-4 py-8">
-        <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-md">
+        <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-[22px] font-montserrat">
           {error}
         </div>
         <button
           onClick={() => router.push(`/decks/${deckId}`)}
-          className="mt-4 text-blue-600 hover:text-blue-800 font-medium flex items-center"
+          className="mt-4 text-oceanBlue hover:text-button font-montserrat flex items-center transition-colors"
         >
           ← Back to Deck
         </button>
@@ -93,7 +92,7 @@ const CardList: React.FC<CardListProps> = ({ deckId }) => {
       <div className="flex justify-between items-center mb-6">
         <Link
           href={`/decks/${deckId}`}
-          className="text-blue-600 hover:text-blue-800 font-medium flex items-center"
+          className="text-oceanBlue hover:text-button font-montserrat flex items-center transition-colors"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -111,16 +110,18 @@ const CardList: React.FC<CardListProps> = ({ deckId }) => {
         </Link>
       </div>
 
-      <div className="bg-white shadow-md rounded-lg overflow-hidden border border-gray-200 mb-8">
+      <div className="bg-white shadow-md rounded-[22px] overflow-hidden border border-gray-200 mb-8">
         <div className="p-6">
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">Cards</h2>
-          <p className="text-gray-600 mb-4">
+          <h2 className="text-2xl font-bold text-title mb-2 font-bricolage">
+            Cards
+          </h2>
+          <p className="text-gray-600 mb-4 font-montserrat">
             Manage the flashcards in this deck
           </p>
           <button
             onClick={handleCreateCard}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md 
-                     transition duration-200 flex items-center"
+            className="bg-oceanBlue hover:bg-button text-white font-poppins py-2 px-4 rounded-[22px] 
+                     transition duration-200 flex items-center shadow-md"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -140,10 +141,10 @@ const CardList: React.FC<CardListProps> = ({ deckId }) => {
       </div>
 
       {cards.length === 0 ? (
-        <div className="bg-gray-50 border border-gray-200 rounded-lg p-8 text-center">
+        <div className="bg-white border border-gray-200 rounded-[22px] p-8 text-center shadow-md">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="h-16 w-16 mx-auto text-gray-400 mb-4"
+            className="h-16 w-16 mx-auto text-oceanBlue/40 mb-4"
             fill="none"
             viewBox="0 0 24 24"
             stroke="currentColor"
@@ -155,14 +156,14 @@ const CardList: React.FC<CardListProps> = ({ deckId }) => {
               d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"
             />
           </svg>
-          <p className="text-lg text-gray-600 mb-4">
+          <p className="text-lg text-title mb-4 font-montserrat">
             This deck doesn&apos;t have any cards yet. Add your first card to
             start studying!
           </p>
           <button
             onClick={handleCreateCard}
-            className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-6 rounded-md 
-                     transition duration-200"
+            className="bg-oceanBlue hover:bg-button text-white font-poppins py-2 px-6 rounded-[22px] 
+                     transition duration-200 shadow-md"
           >
             Add Your First Card
           </button>
@@ -170,7 +171,7 @@ const CardList: React.FC<CardListProps> = ({ deckId }) => {
       ) : (
         <div>
           <div className="mb-4">
-            <p className="text-gray-600">
+            <p className="text-gray-600 font-montserrat">
               {cards.length} card{cards.length !== 1 ? "s" : ""} in this deck
             </p>
           </div>
