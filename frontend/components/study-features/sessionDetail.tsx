@@ -1,6 +1,5 @@
 "use client";
 import { useState, useEffect } from "react";
-//import { useRouter } from "next/navigation";
 import { getSessionDetails } from "../../services/studySessionService";
 import Link from "next/link";
 
@@ -36,7 +35,6 @@ const SessionDetail: React.FC<SessionDetailProps> = ({ sessionId }) => {
   const [session, setSession] = useState<SessionData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  //const router = useRouter();
 
   useEffect(() => {
     const fetchSessionDetails = async () => {
@@ -99,8 +97,8 @@ const SessionDetail: React.FC<SessionDetailProps> = ({ sessionId }) => {
     return (
       <div className="flex justify-center items-center min-h-[60vh]">
         <div className="flex flex-col items-center space-y-4">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
-          <p className="text-gray-600">Loading session details...</p>
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-oceanBlue"></div>
+          <p className="text-title font-poppins">Loading session details...</p>
         </div>
       </div>
     );
@@ -108,13 +106,13 @@ const SessionDetail: React.FC<SessionDetailProps> = ({ sessionId }) => {
 
   if (error) {
     return (
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-lg mb-6">
+      <div className="max-w-7xl mx-auto px-4 py-8 font-poppins">
+        <div className="bg-red-50 border border-red-200 text-red-700 px-6 py-4 rounded-[22px] mb-6">
           <p>{error}</p>
         </div>
         <Link
           href="/sessions"
-          className="text-blue-600 hover:text-blue-700 font-medium flex items-center"
+          className="text-oceanBlue hover:text-button font-medium flex items-center transition duration-300"
         >
           <svg
             className="h-5 w-5 mr-1"
@@ -137,13 +135,13 @@ const SessionDetail: React.FC<SessionDetailProps> = ({ sessionId }) => {
 
   if (!session) {
     return (
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <div className="bg-yellow-50 border border-yellow-200 text-yellow-700 px-6 py-4 rounded-lg mb-6">
+      <div className="max-w-7xl mx-auto px-4 py-8 font-poppins">
+        <div className="bg-yellow-50 border border-yellow-200 text-yellow-700 px-6 py-4 rounded-[22px] mb-6">
           <p>Session not found</p>
         </div>
         <Link
           href="/sessions"
-          className="text-blue-600 hover:text-blue-700 font-medium flex items-center"
+          className="text-oceanBlue hover:text-button font-medium flex items-center transition duration-300"
         >
           <svg
             className="h-5 w-5 mr-1"
@@ -165,11 +163,11 @@ const SessionDetail: React.FC<SessionDetailProps> = ({ sessionId }) => {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 py-8">
+    <div className="max-w-7xl mx-auto px-4 py-8 font-poppins">
       <div className="mb-6">
         <Link
           href="/sessions"
-          className="text-blue-600 hover:text-blue-700 font-medium flex items-center"
+          className="text-oceanBlue hover:text-button font-medium flex items-center transition duration-300"
         >
           <svg
             className="h-5 w-5 mr-1"
@@ -189,34 +187,36 @@ const SessionDetail: React.FC<SessionDetailProps> = ({ sessionId }) => {
       </div>
 
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-800">Session Details</h1>
-        <p className="text-gray-600 mt-2">
+        <h1 className="text-3xl font-bold text-white font-bricolage">
+          Session Details
+        </h1>
+        <p className="text-white mt-2 font-montserrat">
           Review your performance from this study session
         </p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+        <div className="bg-white rounded-[22px] shadow-md overflow-hidden border border-gray-200">
           <div className="p-6">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4">
+            <h2 className="text-lg font-semibold text-title font-bricolage mb-4">
               Session Overview
             </h2>
             <div className="space-y-3">
               <div>
-                <p className="text-sm text-gray-500">Deck</p>
-                <p className="font-medium text-gray-800">
-                  {session.deck.title}
-                </p>
+                <p className="text-sm text-gray-500 font-montserrat">Deck</p>
+                <p className="font-medium text-title">{session.deck.title}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Date</p>
-                <p className="font-medium text-gray-800">
+                <p className="text-sm text-gray-500 font-montserrat">Date</p>
+                <p className="font-medium text-title">
                   {formatDate(session.startTime)}
                 </p>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Duration</p>
-                <p className="font-medium text-gray-800">
+                <p className="text-sm text-gray-500 font-montserrat">
+                  Duration
+                </p>
+                <p className="font-medium text-title">
                   {calculateDuration(session.startTime, session.endTime)}
                 </p>
               </div>
@@ -224,26 +224,30 @@ const SessionDetail: React.FC<SessionDetailProps> = ({ sessionId }) => {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+        <div className="bg-white rounded-[22px] shadow-md overflow-hidden border border-gray-200">
           <div className="p-6">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4">
+            <h2 className="text-lg font-semibold text-title font-bricolage mb-4">
               Statistics
             </h2>
             <div className="space-y-3">
               <div>
-                <p className="text-sm text-gray-500">Cards Studied</p>
-                <p className="font-medium text-gray-800">
-                  {session.cardsStudied}
+                <p className="text-sm text-gray-500 font-montserrat">
+                  Cards Studied
                 </p>
+                <p className="font-medium text-title">{session.cardsStudied}</p>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Correct Answers</p>
+                <p className="text-sm text-gray-500 font-montserrat">
+                  Correct Answers
+                </p>
                 <p className="font-medium text-green-600">
                   {session.correctAnswers}
                 </p>
               </div>
               <div>
-                <p className="text-sm text-gray-500">Incorrect Answers</p>
+                <p className="text-sm text-gray-500 font-montserrat">
+                  Incorrect Answers
+                </p>
                 <p className="font-medium text-red-600">
                   {session.incorrectAnswers}
                 </p>
@@ -252,9 +256,9 @@ const SessionDetail: React.FC<SessionDetailProps> = ({ sessionId }) => {
           </div>
         </div>
 
-        <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200">
+        <div className="bg-white rounded-[22px] shadow-md overflow-hidden border border-gray-200">
           <div className="p-6">
-            <h2 className="text-lg font-semibold text-gray-800 mb-4">
+            <h2 className="text-lg font-semibold text-title font-bricolage mb-4">
               Success Rate
             </h2>
             <div className="text-center mb-4">
@@ -271,7 +275,7 @@ const SessionDetail: React.FC<SessionDetailProps> = ({ sessionId }) => {
                     fill="none"
                     stroke={
                       session.correctAnswers / session.cardsStudied >= 0.7
-                        ? "#10B981"
+                        ? "#28AFB0"
                         : session.correctAnswers / session.cardsStudied >= 0.4
                         ? "#F59E0B"
                         : "#EF4444"
@@ -286,7 +290,7 @@ const SessionDetail: React.FC<SessionDetailProps> = ({ sessionId }) => {
                   />
                 </svg>
                 <div className="absolute inset-0 flex items-center justify-center">
-                  <span className="text-2xl font-bold text-gray-800">
+                  <span className="text-2xl font-bold text-title font-bricolage">
                     {getSuccessRate(
                       session.correctAnswers,
                       session.cardsStudied
@@ -297,7 +301,7 @@ const SessionDetail: React.FC<SessionDetailProps> = ({ sessionId }) => {
             </div>
             <Link
               href={`/decks/${session.deck._id}/study`}
-              className="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition duration-200"
+              className="block w-full text-center bg-button hover:bg-oceanBlue text-white font-medium py-2 px-4 rounded-[22px] transition duration-300"
             >
               Study Again
             </Link>
@@ -305,9 +309,9 @@ const SessionDetail: React.FC<SessionDetailProps> = ({ sessionId }) => {
         </div>
       </div>
 
-      <div className="bg-white rounded-xl shadow-md overflow-hidden border border-gray-200 mb-8">
+      <div className="bg-white rounded-[22px] shadow-md overflow-hidden border border-gray-200 mb-8">
         <div className="p-6">
-          <h2 className="text-lg font-semibold text-gray-800 mb-6">
+          <h2 className="text-lg font-semibold text-title font-bricolage mb-6">
             Card Results
           </h2>
 
@@ -316,7 +320,7 @@ const SessionDetail: React.FC<SessionDetailProps> = ({ sessionId }) => {
               {session.cardResults.map((result, index) => (
                 <div
                   key={index}
-                  className={`p-4 rounded-lg border ${
+                  className={`p-4 rounded-[22px] border ${
                     result.isCorrect
                       ? "border-green-200 bg-green-50"
                       : "border-red-200 bg-red-50"
@@ -325,12 +329,16 @@ const SessionDetail: React.FC<SessionDetailProps> = ({ sessionId }) => {
                   <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
                     <div className="flex-grow">
                       <div className="mb-3">
-                        <p className="text-sm text-gray-600 mb-1">Question:</p>
-                        <p className="text-gray-800">{result.card.question}</p>
+                        <p className="text-sm text-gray-600 mb-1 font-montserrat">
+                          Question:
+                        </p>
+                        <p className="text-title">{result.card.question}</p>
                       </div>
                       <div>
-                        <p className="text-sm text-gray-600 mb-1">Answer:</p>
-                        <p className="text-gray-800">{result.card.answer}</p>
+                        <p className="text-sm text-gray-600 mb-1 font-montserrat">
+                          Answer:
+                        </p>
+                        <p className="text-title">{result.card.answer}</p>
                       </div>
                     </div>
 
@@ -345,7 +353,7 @@ const SessionDetail: React.FC<SessionDetailProps> = ({ sessionId }) => {
                       >
                         {result.isCorrect ? "Correct" : "Incorrect"}
                       </span>
-                      <span className="text-xs text-gray-500">
+                      <span className="text-xs text-gray-500 font-montserrat">
                         Time spent: {Math.round(result.timeSpent / 1000)}s
                       </span>
                     </div>
@@ -354,7 +362,9 @@ const SessionDetail: React.FC<SessionDetailProps> = ({ sessionId }) => {
               ))}
             </div>
           ) : (
-            <p className="text-gray-600 italic">No card results available</p>
+            <p className="text-gray-600 italic font-montserrat">
+              No card results available
+            </p>
           )}
         </div>
       </div>
