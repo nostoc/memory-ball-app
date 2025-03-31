@@ -6,17 +6,15 @@ services:
     container_name: mongodb
     restart: always
     ports:
-      - "27018:27017"
+      - "27017:27017"
     environment:
-      MONGO_INITDB_ROOT_USERNAME: nostoc
-      MONGO_INITDB_ROOT_PASSWORD: gbrgjkhkebrbqj
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
     volumes:
       - mongo_data:/data/db
 
   backend:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile
+    image: nostochk/backend:latest  # Use pre-built image
     container_name: backend
     restart: always
     depends_on:
@@ -24,16 +22,14 @@ services:
     ports:
       - "5000:5000"
     environment:
-      MONGO_URI: "mongodb://nostoc:gbrgjkhkebrbqj@mongodb:27017/memoryball?authSource=admin"
+      MONGO_URI: "mongodb://root:example@mongodb:27017"
       NODE_ENV: development
     volumes:
       - ./Backend:/home/node/app
       - /home/node/app/node_modules
 
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    image: nostochk/frontend:latest  # Use pre-built image
     container_name: frontend
     restart: always
     depends_on:
@@ -42,7 +38,7 @@ services:
       - "3000:3000"
     environment:
       - NODE_ENV=production
-      - NEXT_PUBLIC_BACKEND_URL=http://backend:5000
+      - NEXT_PUBLIC_BACKEND_URL=http://localhost:5000
 
 volumes:
   mongo_data:
