@@ -21,6 +21,14 @@ interface AuthInitializerProps {
   children: React.ReactNode;
 }
 
+// Declare global methods
+declare global {
+  interface Window {
+    loginUser: (token: string, user: User) => void;
+    logoutUser: () => void;
+  }
+}
+
 const AuthInitializer: React.FC<AuthInitializerProps> = ({ children }) => {
   const [isInitialized, setIsInitialized] = useState(false);
   const router = useRouter();
@@ -71,22 +79,23 @@ const AuthInitializer: React.FC<AuthInitializerProps> = ({ children }) => {
     };
 
     initializeAuth();
+
+    // Add global methods for login/logout only on the client side
+    if (typeof window !== "undefined") {
+      window.loginUser = (token: string, user: User) => {
+        localStorage.setItem("token", token);
+        AuthState.user = user;
+        AuthState.isAuthenticated = true;
+        toast.success("Successfully logged in!");
+      };
+
+      window.logoutUser = () => {
+        localStorage.removeItem("token");
+        AuthState.user = null;
+        AuthState.isAuthenticated = false;
+      };
+    }
   }, [pathname, router]);
-
-  // Add global methods for login/logout
- window.loginUser = (token: string, user: User) => {
-   localStorage.setItem("token", token);
-   AuthState.user = user;
-   AuthState.isAuthenticated = true;
-   toast.success("Successfully logged in!");
- };
-
-  window.logoutUser = () => {
-    localStorage.removeItem("token");
-    AuthState.user = null;
-    AuthState.isAuthenticated = false;
-    
-  };
 
   // Show nothing until auth is initialized
   if (!isInitialized) {
@@ -97,11 +106,3 @@ const AuthInitializer: React.FC<AuthInitializerProps> = ({ children }) => {
 };
 
 export default AuthInitializer;
-
-// Declare global methods
-declare global {
-  interface Window {
-    loginUser: (token: string, user: User) => void;
-    logoutUser: () => void;
-  }
-}
