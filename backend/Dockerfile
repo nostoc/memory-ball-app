@@ -9,7 +9,7 @@ WORKDIR /home/node/app
 
 # Add build arguments for secrets
 ARG JWT_SECRET
-ARG MONGO_URI=mongodb://root:example@mongodb:27017/qrgen?authSource=admin
+ARG MONGO_URI=mongodb://root:example@mongodb:27017/memoryball?authSource=admin
 ARG FRONTEND_URL
 
 # Set environment variables
