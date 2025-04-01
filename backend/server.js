@@ -40,6 +40,8 @@ app.use("/api/v1/decks", deckRouter);
 app.use("/api/v1/cards", cardRouter);
 app.use("/api/v1/sessions", sessionRouter);
 
+
+
 // Handle undefined routes
 app.all("*", (req, res, next) => {
   next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
@@ -49,6 +51,11 @@ app.all("*", (req, res, next) => {
 app.use(globalErrorHandler);
 
 const PORT = process.env.PORT || 5000;
+
+// Add a health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'healthy' });
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
