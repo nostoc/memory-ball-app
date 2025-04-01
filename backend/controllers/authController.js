@@ -4,9 +4,10 @@ const jwt = require("jsonwebtoken");
 // Generate JWT Token
 const generateToken = (id) => {
   return jwt.sign({ id }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRE,
+    expiresIn: "30d",
   });
 };
+
 
 // @desc    Register user
 // @route   POST /api/auth/register

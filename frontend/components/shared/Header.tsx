@@ -187,13 +187,13 @@ const handleLogout = () => {
                     {userEmail}
                   </div>
                   <Link
-                    href="/profile"
+                    href="/auth/profile"
                     className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 font-montserrat"
                   >
                     Profile
                   </Link>
                   <Link
-                    href="/stats/user"
+                    href="/stats"
                     className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 font-montserrat"
                   >
                     My Statistics
