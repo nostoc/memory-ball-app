@@ -17,7 +17,7 @@ USER node
 # Copy remaining files
 COPY --chown=node:node . .
 
-EXPOSE 3000
+EXPOSE 5000
 
 # Start the server with nodemon
 CMD ["npx", "nodemon", "server.js"]
