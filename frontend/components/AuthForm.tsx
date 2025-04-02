@@ -108,7 +108,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ type, onSubmit, error }) => {
           type="submit"
           className="w-full  bg-oceanBlue text-white font-semibold py-3 rounded-lg hover:bg-background focus:outline-none focus:ring-2 focus:ring-bg-oceanBlue focus:ring-offset-2 transition-all duration-200"
         >
-          {type === "login" ? "Sign In" : "Sign Up"}
+          {type === "login" ? "Sign in" : "Sign Up"}
         </button>
 
         <div className="text-center text-sm text-gray-600">
