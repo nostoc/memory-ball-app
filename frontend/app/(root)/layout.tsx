@@ -71,6 +71,10 @@ const bricolage = localFont({
 export const metadata: Metadata = {
   title: "Memory Ball",
   description: "Your personal memory assistant",
+  verification: {
+    google: "zS_mrSk4epSJgqZh_WMzpWY--hxvKqASL8pY8JNCD3Q"
+  }
+
 };
 
 export default function RootLayout({
