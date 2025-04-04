@@ -59,7 +59,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ type, onSubmit, error }) => {
               name="name"
               value={(formData as RegisterCredentials).name}
               onChange={handleChange}
-              className="w-full px-4 py-3 rounded-lg border border-gray-300  focus:ring-2 focus:ring-blue-200 transition duration-200 outline-none"
+              className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white focus:ring-2 focus:ring-blue-200 transition duration-200 outline-none"
               placeholder="Enter your name"
               required
             />
@@ -79,7 +79,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ type, onSubmit, error }) => {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            className="w-full px-4 py-3 rounded-lg border border-gray-300  focus:ring-2 focus:ring-blue-200 transition duration-200 outline-none"
+            className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 focus:ring-2 focus:ring-oceanBlue focus:border-oceanBlue transition duration-200 outline-none"
             placeholder="Enter your email"
             required
           />
@@ -98,7 +98,7 @@ const AuthForm: React.FC<AuthFormProps> = ({ type, onSubmit, error }) => {
             name="password"
             value={formData.password}
             onChange={handleChange}
-            className="w-full px-4 py-3 rounded-lg border border-gray-300  focus:ring-2 focus:ring-blue-200 transition duration-200 outline-none"
+            className="w-full px-4 py-3 rounded-lg border border-gray-300 bg-white text-gray-900 focus:ring-2 focus:ring-oceanBlue focus:border-oceanBlue transition duration-200 outline-none"
             placeholder="Enter your password"
             required
           />
