@@ -30,20 +30,27 @@ const Login: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="flex flex-col gap-4 w-full max-w-md mx-auto p-6">
       <input
         type="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Email"
+        className="input input-bordered bg-base-200 text-base-content w-full"
       />
       <input
         type="password"
         value={password}
         onChange={(e) => setPassword(e.target.value)}
         placeholder="Password"
+        className="input input-bordered bg-base-200 text-base-content w-full"
       />
-      <button onClick={handleLogin}>Login</button>
+      <button 
+        onClick={handleLogin}
+        className="btn btn-primary w-full"
+      >
+        Login
+      </button>
     </div>
   );
 };

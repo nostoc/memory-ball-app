@@ -115,10 +115,12 @@ const handleLogout = () => {
       <div className="container mx-auto px-4 md:px-6 lg:px-8 flex flex-wrap justify-between items-center">
         {/* Logo and App Name */}
         <div className="flex items-center py-4 text-white">
+          <Link href="/" className="flex items-center">
           <Image src={Icon} alt="memory ball logo" width={40} height={40} />
           <p className="font-bricolage font-bold text-[20px] ml-2">
             Memory Ball
           </p>
+          </Link>
         </div>
 
         {/* Mobile menu button */}
@@ -160,10 +162,10 @@ const handleLogout = () => {
                 <button
                   key={link.name}
                   onClick={() => handleNavigate(link.href, link.authRequired)}
-                  className={`font-bricolage text-sm px-3 py-2 rounded-md transition-colors ${
+                  className={`font-montserrat font-bold px-4 py-2 rounded-md transition-colors ${
                     isActiveLink(link.href)
-                      ? "text-white bg-oceanBlue"
-                      : "text-white/80 hover:text-white hover:bg-oceanBlue/20"
+                      ? "text-white hover:bg-oceanBlue/90 hover:text-white"
+                      : "text-white hover:bg-oceanBlue/90 hover:text-white"
                   }`}
                 >
                   {link.name}
@@ -209,7 +211,7 @@ const handleLogout = () => {
             </div>
           ) : (
             <Link href="/auth/login">
-              <button className="bg-oceanBlue text-white font-montserrat font-bold px-4 py-2 rounded-md hover:bg-oceanBlue/90 transition-colors shadow-md">
+              <button className="font-montserrat font-bold px-4 py-2 rounded-md bg-oceanBlue text-white hover:bg-oceanBlue/90 transition-colors shadow-md">
                 Login
               </button>
             </Link>
