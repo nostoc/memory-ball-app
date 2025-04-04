@@ -171,7 +171,7 @@ const CardList: React.FC<CardListProps> = ({ deckId }) => {
       ) : (
         <div>
           <div className="mb-4">
-            <p className="text-gray-600 font-montserrat">
+            <p className="text-white font-montserrat">
               {cards.length} card{cards.length !== 1 ? "s" : ""} in this deck
             </p>
           </div>

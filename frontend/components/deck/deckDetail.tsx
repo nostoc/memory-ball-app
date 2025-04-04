@@ -34,7 +34,7 @@ const DeckDetail: React.FC<DeckDetailProps> = ({ deckId }) => {
         ]);
 
         setDeck(deckResponse.data.deck);
-        setStats(statsResponse.data.data);
+        setStats(statsResponse.data);
         setError(null);
       } catch (err) {
         console.error("Error fetching deck data:", err);

@@ -165,7 +165,7 @@ const DeckForm: React.FC<DeckFormProps> = ({ deckId }) => {
             value={formData.title}
             onChange={handleChange}
             required
-            className="w-full px-4 py-2 border border-gray-300 rounded-[22px] focus:outline-none focus:ring-2 focus:ring-oceanBlue focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 bg-white rounded-[22px] focus:outline-none focus:ring-2 focus:ring-oceanBlue focus:border-transparent"
             placeholder="Enter deck title"
           />
         </div>
@@ -183,7 +183,7 @@ const DeckForm: React.FC<DeckFormProps> = ({ deckId }) => {
             value={formData.description}
             onChange={handleChange}
             rows={4}
-            className="w-full px-4 py-2 border border-gray-300 rounded-[22px] focus:outline-none focus:ring-2 focus:ring-oceanBlue focus:border-transparent"
+            className="w-full px-4 py-2 border border-gray-300 bg-white rounded-[22px] focus:outline-none focus:ring-2 focus:ring-oceanBlue focus:border-transparent"
             placeholder="Describe your deck (optional)"
           />
         </div>
@@ -196,7 +196,7 @@ const DeckForm: React.FC<DeckFormProps> = ({ deckId }) => {
               name="isPublic"
               checked={formData.isPublic}
               onChange={handleChange}
-              className="h-5 w-5 text-oceanBlue rounded focus:ring-oceanBlue border-gray-300"
+              className="h-5 w-5 text-oceanBlue bg-white rounded focus:ring-oceanBlue border-gray-300"
             />
             <span className="ml-2 text-title font-montserrat">
               Make deck public
@@ -222,7 +222,7 @@ const DeckForm: React.FC<DeckFormProps> = ({ deckId }) => {
             value={tagsString} // Use the raw string state here
             onChange={handleTagsChange}
             placeholder="e.g. history, science, math"
-            className="w-full px-4 py-2 border border-gray-300 rounded-[22px] focus:outline-none focus:ring-2 focus:ring-oceanBlue focus:border-transparent"
+            className="w-full px-4 py-2 border bg-white border-gray-300 rounded-[22px] focus:outline-none focus:ring-2 focus:ring-oceanBlue focus:border-transparent"
           />
           <p className="text-sm text-gray-500 mt-1 font-montserrat">
             Tags help organize and find your decks
