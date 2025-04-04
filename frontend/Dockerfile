@@ -18,9 +18,6 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Disable Next.js telemetry
-ENV NEXT_TELEMETRY_DISABLED=1
-
 # Build the Next.js app in standalone mode
 RUN npm run build
 
@@ -32,6 +29,7 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV PORT=3000
+ARG NEXT_PUBLIC_BACKEND_URL="https://api.memoryball.online/api"
 
 # Create a non-root user for security
 RUN addgroup --system --gid 1001 nodejs
@@ -49,7 +47,6 @@ USER nextjs
 
 EXPOSE 3000
 ENV HOSTNAME="0.0.0.0"
-
 
 # Start the Next.js server
 CMD ["node", "server.js", "-H", "0.0.0.0"]
