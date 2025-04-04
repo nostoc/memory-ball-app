@@ -30,7 +30,10 @@ const Footer: React.FC<FooterProps> = ({ appName = "Memory Ball" }) => {
             <h2 className="footer-title">Quick Links</h2>
             <nav className="flex flex-col gap-2">
               <Link href="/" className="link link-hover">
-                Home
+                Hom
+              </Link>
+              <Link href="/about" className="link link-hover">
+                About
               </Link>
               <Link href="/create" className="link link-hover">
                 Create Cards
