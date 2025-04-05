@@ -268,10 +268,10 @@ const TermsOfUse = () => {
             </p>
             <p className="mt-2">
               <a
-                href="mailto:contact@memoryball.co"
+                href="mailto:hello@memoryball.online"
                 className="text-oceanBlue hover:text-button transition-colors"
               >
-                contact@memoryball.co
+                hello@memoryball.online
               </a>
             </p>
           </div>
