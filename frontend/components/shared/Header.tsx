@@ -22,6 +22,7 @@ const Header = () => {
   // Navigation links based on actual service endpoints
   const navigationLinks = [
     { name: "Home", href: "/" },
+    { name: "Guide", href: "/guide" },
     { name: "Decks", href: "/decks", authRequired: true },
     { name: "Create Deck", href: "/decks/new", authRequired: true },
     { name: "Study Sessions", href: "/sessions", authRequired: true },
@@ -66,17 +67,16 @@ const Header = () => {
     };
   }, []);
 
-const handleLogout = () => {
-  window.logoutUser();
-  setIsDropdownOpen(false);
-  setIsMobileMenuOpen(false);
-  toast.success("Successfully logged out!");
-  router.push("/auth/login");
-};
+  const handleLogout = () => {
+    window.logoutUser();
+    setIsDropdownOpen(false);
+    setIsMobileMenuOpen(false);
+    toast.success("Successfully logged out!");
+    router.push("/auth/login");
+  };
 
   const handleNavigate = (href: string, authRequired: boolean = false) => {
     if (authRequired && !isLoggedIn) {
-     
       router.push("/auth/login");
       return;
     }
@@ -84,31 +84,31 @@ const handleLogout = () => {
     setIsMobileMenuOpen(false);
   };
 
- const isActiveLink = (href: string) => {
-   // Special case for specific navigation links to avoid conflicts
-   if (href === "/decks" && pathname === "/decks/new") {
-     return false; // Don't highlight Decks when on Create Deck
-   }
+  const isActiveLink = (href: string) => {
+    // Special case for specific navigation links to avoid conflicts
+    if (href === "/decks" && pathname === "/decks/new") {
+      return false; // Don't highlight Decks when on Create Deck
+    }
 
-   // For exact match
-   if (pathname === href) {
-     return true;
-   }
+    // For exact match
+    if (pathname === href) {
+      return true;
+    }
 
-   // For the home route
-   if (href === "/" && pathname !== "/") {
-     return false;
-   }
+    // For the home route
+    if (href === "/" && pathname !== "/") {
+      return false;
+    }
 
-   // For other nested routes
-   if (pathname.startsWith(href + "/")) {
-     // Only consider a parent active if we want that behavior
-     // In this case, we don't want parents active for these specific routes
-     return false;
-   }
+    // For other nested routes
+    if (pathname.startsWith(href + "/")) {
+      // Only consider a parent active if we want that behavior
+      // In this case, we don't want parents active for these specific routes
+      return false;
+    }
 
-   return false;
- };
+    return false;
+  };
 
   return (
     <header className="bg-background shadow-md w-full py-2">
@@ -116,10 +116,10 @@ const handleLogout = () => {
         {/* Logo and App Name */}
         <div className="flex items-center py-4 text-white">
           <Link href="/" className="flex items-center">
-          <Image src={Icon} alt="memory ball logo" width={40} height={40} />
-          <p className="font-bricolage font-bold text-[20px] ml-2">
-            Memory Ball
-          </p>
+            <Image src={Icon} alt="memory ball logo" width={40} height={40} />
+            <p className="font-bricolage font-bold text-[20px] ml-2">
+              Memory Ball
+            </p>
           </Link>
         </div>
 
