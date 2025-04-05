@@ -69,8 +69,21 @@ const bricolage = localFont({
 });
 
 export const metadata: Metadata = {
-  title: "Memory Ball",
+  title: {
+    default: "Memory Ball",
+    template: "%s | Memory Ball",
+  },
   description: "Your personal memory assistant",
+  twitter:{
+    card: "summary_large_image",
+    title: "Memory Ball",
+    description: "Your personal memory assistant",
+    creator: "@memoryball",
+  },
+  verification: {
+    google: "zS_mrSk4epSJgqZh_WMzpWY--hxvKqASL8pY8JNCD3Q"
+  }
+
 };
 
 export default function RootLayout({
