@@ -74,7 +74,7 @@ const DeckList = () => {
     );
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
+    <div className="max-w-6xl mx-auto px-4 py-8 mb-40">
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-white font-bricolage">
           My Decks
