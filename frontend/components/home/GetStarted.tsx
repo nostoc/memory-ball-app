@@ -7,7 +7,7 @@ import { PiArrowBendUpRightFill } from "react-icons/pi";
 
 const GetStartedSteps = ({}) => {
   return (
-    <section className="container mx-auto py-12 my-20">
+    <section className="container mx-auto py-12 my-20 ">
       <h1 className="text-4xl font-bold text-white text-center mb-20 font-bricolage text-[56px]">
         Get Started in{" "}
         <span className="bg-white text-title px-2">03 Simple Steps</span>
