@@ -10,7 +10,7 @@ import Stat from "../../public/images/stat.png"
 
 const GuidePage = () => {
   return (
-    <div className="min-h-screen bg-gray-950 text-white">
+    <div className="min-h-screen bg-gray-950 text-white px-4">
       <div className="max-w-5xl mx-auto px-4 py-16">
         <Link
           href="/"

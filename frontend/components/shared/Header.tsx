@@ -19,10 +19,11 @@ const Header = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(AuthState.isAuthenticated);
   const [userEmail, setUserEmail] = useState(AuthState.user?.email || "");
 
-  // Navigation links based on actual service endpoints
+  // Updated navigation links with About page
   const navigationLinks = [
     { name: "Home", href: "/" },
     { name: "Guide", href: "/guide" },
+    { name: "About", href: "/about", hideWhenLoggedIn: true }, // New About link
     { name: "Decks", href: "/decks", authRequired: true },
     { name: "Create Deck", href: "/decks/new", authRequired: true },
     { name: "Study Sessions", href: "/sessions", authRequired: true },
@@ -110,6 +111,11 @@ const Header = () => {
     return false;
   };
 
+  // Update mobile menu toggle to properly close
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen((prev) => !prev);
+  };
+
   return (
     <header className="bg-background shadow-md w-full py-2">
       <div className="container mx-auto px-4 md:px-6 lg:px-8 flex flex-wrap justify-between items-center">
@@ -126,7 +132,7 @@ const Header = () => {
         {/* Mobile menu button */}
         <button
           className="md:hidden p-2 rounded-md text-white hover:bg-oceanBlue/20 transition-colors"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          onClick={toggleMobileMenu}
           aria-label="Toggle menu"
         >
           <svg
@@ -158,7 +164,8 @@ const Header = () => {
         <div className="hidden md:flex items-center space-x-4">
           <nav className="flex items-center space-x-4 mr-4">
             {navigationLinks.map((link) =>
-              !link.authRequired || (link.authRequired && isLoggedIn) ? (
+              (!link.authRequired && (!link.hideWhenLoggedIn || !isLoggedIn)) ||
+              (link.authRequired && isLoggedIn) ? (
                 <button
                   key={link.name}
                   onClick={() => handleNavigate(link.href, link.authRequired)}
@@ -194,12 +201,6 @@ const Header = () => {
                   >
                     Profile
                   </Link>
-                  <Link
-                    href="/stats"
-                    className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 font-montserrat"
-                  >
-                    My Statistics
-                  </Link>
                   <button
                     onClick={handleLogout}
                     className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 font-montserrat"
@@ -226,7 +227,8 @@ const Header = () => {
           >
             <nav className="flex flex-col">
               {navigationLinks.map((link) =>
-                !link.authRequired || (link.authRequired && isLoggedIn) ? (
+                (!link.authRequired && (!link.hideWhenLoggedIn || !isLoggedIn)) ||
+                (link.authRequired && isLoggedIn) ? (
                   <button
                     key={link.name}
                     onClick={() => handleNavigate(link.href, link.authRequired)}
@@ -249,12 +251,7 @@ const Header = () => {
                   >
                     Profile
                   </Link>
-                  <Link
-                    href="/stats/user"
-                    className="text-left font-montserrat text-sm px-4 py-3 text-gray-700 hover:bg-gray-50"
-                  >
-                    My Statistics
-                  </Link>
+
                   <button
                     onClick={handleLogout}
                     className="text-left font-montserrat text-sm px-4 py-3 text-gray-700 hover:bg-gray-50 border-t"
