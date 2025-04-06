@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { FaFacebook, FaTwitter, FaEnvelope } from "react-icons/fa";
+import { FaFacebook, FaTwitter, FaEnvelope, FaLinkedin } from "react-icons/fa";
 import Image from "next/image";
 import Icon from "../../public/icon.png";
 import { AuthState } from "@/components/shared/authInitializer";
@@ -38,7 +38,7 @@ const Footer: React.FC<FooterProps> = ({ appName = "Memory Ball" }) => {
   };
 
   return (
-    <footer className="footer p-10 bg-neutral text-neutral-content mt-auto font-bricolage">
+    <footer className="footer py-10 bg-neutral text-neutral-content mt-auto font-bricolage">
       <div className="container mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* App Info */}
@@ -105,36 +105,42 @@ const Footer: React.FC<FooterProps> = ({ appName = "Memory Ball" }) => {
 
           {/* Connect */}
           <div className="md:col-span-1">
-            <h2 className="footer-title">Follow Us</h2>
-            <div className="flex flex-col">
+            <h2 className="footer-title text-center">Follow Us</h2>
+            <div className="flex flex-col justify-center items-center">
               <div className="flex gap-4 mb-4">
-                <a
-                  href="https://facebook.com/memoryball"
+                <Link
+                  href="https://facebook.com/#"
                   target="_blank"
-                  rel="noopener noreferrer"
                   aria-label="Facebook"
                   className="btn btn-circle btn-ghost"
                 >
                   <FaFacebook className="text-xl" />
-                </a>
-                <a
-                  href="https://twitter.com/memoryball"
+                </Link>
+                <Link
+                  href="https://twitter.com/#"
                   target="_blank"
-                  rel="noopener noreferrer"
                   aria-label="Twitter"
                   className="btn btn-circle btn-ghost"
                 >
                   <FaTwitter className="text-xl" />
-                </a>
+                </Link>
+                <Link
+                  href="https://linkedin.com/company/#"
+                  target="_blank"
+                  aria-label="LinkedIn"
+                  className="btn btn-circle btn-ghost"
+                >
+                  <FaLinkedin className="text-xl" />
+                </Link>
               </div>
-              <div className="">
-                <a
+              <div>
+                <Link
                   href="mailto:contact@memoryball.online"
                   className="flex items-center gap-2 text-sm opacity-75 hover:opacity-100 transition-opacity"
                 >
                   <FaEnvelope className="text-lg" />
                   contact@memoryball.online
-                </a>
+                </Link>
               </div>
             </div>
           </div>
