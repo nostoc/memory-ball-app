@@ -11,11 +11,11 @@ const FlashCardDemo = () => {
 
   return (
     <section className="container mx-auto py-8 md:py-12 my-10 md:my-20">
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="max-w-7xl">
         <div className="text-center mb-8 md:mb-12">
           <h1 className="text-3xl md:text-4xl lg:text-[56px] font-bold text-white text-center mb-8 md:mb-20 font-bricolage">
             Try Our{" "}
-            <span className="bg-white text-title px-2 mt-2 md:mt-0 inline-block">Interactive</span>{" "}
+            <span className="bg-white text-title p-2 mt-2 md:mt-0 inline-block">Interactive</span>{" "}
             Flashcards
           </h1>
           <h3 className="text-xl md:text-2xl text-gray-300 font-bricolage max-w-3xl mx-auto px-4">
