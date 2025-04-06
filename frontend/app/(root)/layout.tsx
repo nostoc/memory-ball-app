@@ -70,20 +70,33 @@ const bricolage = localFont({
 
 export const metadata: Metadata = {
   title: {
-    default: "Memory Ball",
-    template: "%s | Memory Ball",
+    default: "Memory Ball | Free Online Flash Cards",
+    template: "%s | Memory Ball - Smart Flash Cards",
   },
-  description: "Your personal memory assistant",
-  twitter:{
+  description: "Create, study and share flash cards for free. Boost your learning with Memory Ball's smart flash card system. Perfect for students, professionals, and lifelong learners.",
+  keywords: "flash cards, online flash cards, free flash cards, study tools, learning, memorization, spaced repetition",
+  openGraph: {
+    title: "Memory Ball - Free Online Flash Cards",
+    description: "Create and study flash cards for free. Perfect for students and lifelong learners.",
+    type: "website",
+    url: "https://memoryball.app"
+  },
+  twitter: {
     card: "summary_large_image",
-    title: "Memory Ball",
-    description: "Your personal memory assistant",
-    creator: "@memoryball",
+    title: "Memory Ball - Free Online Flash Cards",
+    description: "Create and study flash cards for free. Perfect for students and lifelong learners.",
+    creator: "@memoryball"
   },
   verification: {
     google: "zS_mrSk4epSJgqZh_WMzpWY--hxvKqASL8pY8JNCD3Q"
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: "https://memoryball.app",
   }
-
 };
 
 export default function RootLayout({
