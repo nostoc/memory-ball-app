@@ -109,7 +109,7 @@ const Footer: React.FC<FooterProps> = ({ appName = "Memory Ball" }) => {
             <div className="flex flex-col justify-center items-center">
               <div className="flex gap-4 mb-4">
                 <Link
-                  href="https://facebook.com/memoryball"
+                  href="https://facebook.com/#"
                   target="_blank"
                   aria-label="Facebook"
                   className="btn btn-circle btn-ghost"
@@ -117,7 +117,7 @@ const Footer: React.FC<FooterProps> = ({ appName = "Memory Ball" }) => {
                   <FaFacebook className="text-xl" />
                 </Link>
                 <Link
-                  href="https://twitter.com/memoryball"
+                  href="https://twitter.com/#"
                   target="_blank"
                   aria-label="Twitter"
                   className="btn btn-circle btn-ghost"
@@ -125,7 +125,7 @@ const Footer: React.FC<FooterProps> = ({ appName = "Memory Ball" }) => {
                   <FaTwitter className="text-xl" />
                 </Link>
                 <Link
-                  href="https://linkedin.com/company/memoryball"
+                  href="https://linkedin.com/company/#"
                   target="_blank"
                   aria-label="LinkedIn"
                   className="btn btn-circle btn-ghost"
