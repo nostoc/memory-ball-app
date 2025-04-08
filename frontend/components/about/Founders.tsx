@@ -15,9 +15,7 @@ export default function Founders() {
       <div className="mb-16">
         {/* Section Header with accent styling */}
         <div className="text-center mb-12">
-          <span className="inline-block px-3 py-1 bg-oceanBlue/10 text-oceanBlue text-sm rounded-full mb-2 font-montserrat">
-            OUR TEAM
-          </span>
+          
           <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-white mb-3">
             Meet Our <span className="text-title bg-white">Founders</span>
           </h2>

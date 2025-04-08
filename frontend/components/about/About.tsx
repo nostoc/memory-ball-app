@@ -1,23 +1,12 @@
 "use client";
-import Image from "next/image";
-import Icon from "@/public/icon.png";
+
 
 export default function About() {
   return (
     <section className="font-bricolage">
       {/* Hero Section with enhanced styling */}
       <div className="text-center mb-16 md:mb-20">
-        <div className="flex justify-center mb-6 animate-bounce-slow">
-          <div className="relative p-3 bg-gradient-to-br from-oceanBlue/20 to-transparent rounded-full">
-            <Image
-              src={Icon}
-              alt="Memory Ball Logo"
-              width={80}
-              height={80}
-              className="drop-shadow-[0_0_15px_rgba(44,183,190,0.3)]"
-            />
-          </div>
-        </div>
+        
         <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4 tracking-tight">
           About { " "}<span className="text-title bg-white">Memory Ball</span>
         </h1>
@@ -90,9 +79,7 @@ export default function About() {
       {/* Key Features with enhanced cards */}
       <div className="mb-16">
         <div className="text-center mb-8">
-          <span className="inline-block px-3 py-1 bg-oceanBlue/10 text-oceanBlue text-sm rounded-full mb-2 font-montserrat">
-            FEATURES
-          </span>
+         
           <h2 className="text-2xl md:text-3xl font-bold text-white">
             What Makes Us Special
           </h2>
