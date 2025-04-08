@@ -141,20 +141,37 @@ exports.endSession = catchAsync(async (req, res, next) => {
   });
 });
 
-// Get all sessions for a user
+// Modify the getUserSessions function
 exports.getUserSessions = catchAsync(async (req, res, next) => {
+  // Get page and limit from query params, set defaults
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const skip = (page - 1) * limit;
+
+  // Get total count for pagination
+  const totalSessions = await Session.countDocuments({ user: req.user.id });
+
+  // Get paginated sessions
   const sessions = await Session.find({ user: req.user.id })
     .populate({
       path: "deck",
       select: "title",
     })
-    .sort("-startTime");
+    .sort("-startTime")
+    .skip(skip)
+    .limit(limit);
 
   res.status(200).json({
     status: "success",
     results: sessions.length,
     data: {
       sessions,
+      pagination: {
+        currentPage: page,
+        totalPages: Math.ceil(totalSessions / limit),
+        totalItems: totalSessions,
+        itemsPerPage: limit
+      }
     },
   });
 });

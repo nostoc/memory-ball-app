@@ -30,6 +30,11 @@ exports.createCard = catchAsync(async (req, res, next) => {
 exports.getAllCards = catchAsync(async (req, res, next) => {
   const deckId = req.params.deckId;
   
+  // Parse page and limit from query string, set defaults
+  const page = parseInt(req.query.page, 10) || 1;
+  const limit = parseInt(req.query.limit, 10) || 12; // 12 cards per page
+  const skip = (page - 1) * limit;
+  
   // Check if the deck exists and belongs to the user
   const deck = await Deck.findById(deckId);
   
@@ -40,12 +45,22 @@ exports.getAllCards = catchAsync(async (req, res, next) => {
   if (deck.owner.toString() !== req.user.id && !deck.isPublic) {
     return next(new AppError('You do not have permission to access cards in this deck', 403));
   }
+
+  // Get total count for pagination
+  const totalCards = await Card.countDocuments({ deck: deckId });
   
-  const cards = await Card.find({ deck: deckId });
+  // Get paginated cards
+  const cards = await Card.find({ deck: deckId })
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(limit);
   
   res.status(200).json({
     status: 'success',
     results: cards.length,
+    totalPages: Math.ceil(totalCards / limit),
+    currentPage: page,
+    totalCards,
     data: {
       cards
     }
