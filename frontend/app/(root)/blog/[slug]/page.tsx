@@ -3,6 +3,7 @@ import Link from "next/link";
 import { format } from "date-fns";
 import { getPostData, getAllPostSlugs, getSortedPostsData } from "@/lib/blog";
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
 
 // Generate static params for all blog posts
 export async function generateStaticParams() {
@@ -17,11 +18,10 @@ export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }> | { slug: string };
-}) {
-  // Await the params object itself
-  const resolvedParams = await params;
-
+}): Promise<Metadata> {
   try {
+    // Await params if it's a promise
+    const resolvedParams = "then" in params ? await params : params;
     const post = await getPostData(resolvedParams.slug);
     return {
       title: `${post.title} | Memory Ball Blog`,
@@ -36,17 +36,18 @@ export async function generateMetadata({
   }
 }
 
+// Define the page component
 export default async function BlogPost({
   params,
 }: {
   params: Promise<{ slug: string }> | { slug: string };
 }) {
-  // Await the params object itself
-  const resolvedParams = await params;
   let post;
 
   try {
-    post = await getPostData(resolvedParams.slug); // Await params.slug properly
+    // Await params if it's a promise
+    const resolvedParams = "then" in params ? await params : params;
+    post = await getPostData(resolvedParams.slug);
   } catch (error) {
     console.log(error);
     notFound();
@@ -61,8 +62,10 @@ export default async function BlogPost({
     )
     .slice(0, 3);
 
+  // Rest of the component remains the same
   return (
     <div className="min-h-screen bg-background text-white">
+      {/* Rest of your JSX remains the same */}
       <div className="container mx-auto px-4 md:px-8 lg:px-16 py-8 md:py-16">
         <Link
           href="/blog"
