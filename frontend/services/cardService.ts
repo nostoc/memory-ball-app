@@ -1,12 +1,11 @@
 import api from '../utils/api';
 
 // Get all cards for a deck
-export const getCardsByDeck = async (deckId: string) => {
+export const getCardsByDeck = async (deckId: string, page = 1, limit = 12) => {
   console.log('Making API request for deck:', deckId);
   try {
-    const response = await api.get(`/v1/decks/${deckId}/cards`);
+    const response = await api.get(`/v1/decks/${deckId}/cards?page=${page}&limit=${limit}`);
     console.log('API request successful, status:', response.status);
-    // Return the response directly - don't transform it
     return response.data;
   } catch (error) {
     console.error('API request failed:', error);

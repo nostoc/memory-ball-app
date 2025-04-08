@@ -1,8 +1,8 @@
 import api from '../utils/api';
 
 // Get all decks for the current user
-export const getAllDecks = async () => {
-  const response = await api.get('/v1/decks');
+export const getAllDecks = async (page = 1, limit = 9) => {
+  const response = await api.get(`/v1/decks?page=${page}&limit=${limit}`);
   return response.data;
 };
 
