@@ -20,11 +20,26 @@ exports.createDeck = catchAsync(async (req, res, next) => {
 
 // Get all decks for the current user
 exports.getAllDecks = catchAsync(async (req, res, next) => {
-  const decks = await Deck.find({ owner: req.user.id });
+  // Parse page and limit from query string, set defaults
+  const page = parseInt(req.query.page, 10) || 1;
+  const limit = parseInt(req.query.limit, 10) || 9; // 9 cards per page
+  const skip = (page - 1) * limit;
+
+  // Get total count for pagination
+  const totalDecks = await Deck.countDocuments({ owner: req.user.id });
+  
+  // Get paginated decks
+  const decks = await Deck.find({ owner: req.user.id })
+    .sort({ createdAt: -1 }) // Sort by newest first
+    .skip(skip)
+    .limit(limit);
   
   res.status(200).json({
     status: 'success',
     results: decks.length,
+    totalPages: Math.ceil(totalDecks / limit),
+    currentPage: page,
+    totalDecks,
     data: {
       decks
     }
