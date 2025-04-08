@@ -3,18 +3,16 @@ import Link from "next/link";
 import AuthImage from "../../public/images/auth.png";
 import DeckImage from "../../public/images/deck.png";
 import CardImage from "../../public/images/card.png";
-import StudySession from "../../public/images/study.png"
-import Stat from "../../public/images/stat.png"
-
-
+import StudySession from "../../public/images/study.png";
+import Stat from "../../public/images/stat.png";
 
 const GuidePage = () => {
   return (
-    <div className="min-h-screen bg-gray-950 text-white px-4">
-      <div className="max-w-5xl mx-auto px-4 py-16">
+    <div className="min-h-screen bg-background text-white">
+      <div className="container mx-auto px-4 md:px-8 lg:px-16 py-8 md:py-16">
         <Link
           href="/"
-          className="inline-flex items-center text-oceanBlue hover:text-button mb-8 transition-colors"
+          className="inline-flex font-montserrat items-center text-oceanBlue hover:text-white hover:bg-oceanBlue/10 py-2 px-4 rounded-full transition-all duration-300 mb-8 border border-oceanBlue/20"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -32,10 +30,11 @@ const GuidePage = () => {
         </Link>
 
         <header className="mb-16 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold font-bricolage mb-6">
-            Memory Ball Complete Guide
+          
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold font-bricolage mb-6 tracking-tight">
+            Memory Ball <span className="text-title bg-white">{ " "}Complete Guide{" "} </span>
           </h1>
-          <p className="text-xl text-gray-300 font-montserrat max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-gray-300 font-montserrat max-w-3xl mx-auto leading-relaxed">
             Follow this step-by-step guide to get the most out of Memory Ball
             and improve your learning efficiency.
           </p>
@@ -44,64 +43,69 @@ const GuidePage = () => {
         <div className="space-y-24">
           {/* Step 1: Create an Account */}
           <section id="create-account" className="scroll-mt-20">
-            <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
               <div>
-                <div className="inline-block bg-oceanBlue/20 text-oceanBlue px-3 py-1 rounded-full text-sm font-medium mb-4">
+                <div className="inline-block px-3 py-1 bg-oceanBlue/10 text-oceanBlue text-sm rounded-full mb-4 font-montserrat">
                   Step 1
                 </div>
                 <h2 className="text-2xl md:text-3xl font-bold font-bricolage mb-4">
                   Create Your Account
                 </h2>
                 <div className="space-y-4 text-gray-300 font-montserrat">
-                  <p>
+                  <p className="leading-relaxed">
                     Start by creating your personal account to access all the
                     features of Memory Ball.
                   </p>
-                  <ol className="list-decimal pl-5 space-y-2">
+                  <ol className="list-decimal pl-5 space-y-2 ml-4">
                     <li>
                       Click on the &quot;Sign Up&quot; button on the homepage
                     </li>
                     <li>
                       Enter your name, email address and create a password
                     </li>
-
                     <li>Log in with your new credentials</li>
                   </ol>
                 </div>
               </div>
-              <div className="bg-gray-800 rounded-[22px] h-64 flex items-center justify-center">
-                <Image
-                  alt="Account Creation Illustration"
-                  src={AuthImage}
-                  className="object-contain p-4 "
-                />
+              <div className="bg-background/30 rounded-xl border border-oceanBlue/20 h-64 overflow-hidden group hover:border-oceanBlue/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(44,183,190,0.15)]">
+                <div className="h-full flex items-center justify-center relative p-4">
+                  <div className="absolute inset-0 bg-gradient-to-br from-oceanBlue/5 to-transparent"></div>
+                  <Image
+                    alt="Account Creation Illustration"
+                    src={AuthImage}
+                    className="object-contain z-10 group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
               </div>
             </div>
           </section>
 
           {/* Step 2: Create a Deck */}
           <section id="create-deck" className="scroll-mt-20">
-            <div className="grid md:grid-cols-2 gap-8 items-center">
-              <div className="order-2 md:order-1 bg-gray-800 rounded-[22px] h-64 flex items-center justify-center">
-                <Image
-                  alt="Deck Creation Illustration"
-                  src={DeckImage}
-                  className="object-contain p-4 "
-                />
+            <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+              <div className="order-2 md:order-1 bg-background/30 rounded-xl border border-oceanBlue/20 h-64 overflow-hidden group hover:border-oceanBlue/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(44,183,190,0.15)]">
+                <div className="h-full flex items-center justify-center relative p-4">
+                  <div className="absolute inset-0 bg-gradient-to-br from-oceanBlue/5 to-transparent"></div>
+                  <Image
+                    alt="Deck Creation Illustration"
+                    src={DeckImage}
+                    className="object-contain z-10 group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
               </div>
               <div className="order-1 md:order-2">
-                <div className="inline-block bg-oceanBlue/20 text-oceanBlue px-3 py-1 rounded-full text-sm font-medium mb-4">
+                <div className="inline-block px-3 py-1 bg-oceanBlue/10 text-oceanBlue text-sm rounded-full mb-4 font-montserrat">
                   Step 2
                 </div>
                 <h2 className="text-2xl md:text-3xl font-bold font-bricolage mb-4">
                   Create Your First Deck
                 </h2>
                 <div className="space-y-4 text-gray-300 font-montserrat">
-                  <p>
+                  <p className="leading-relaxed">
                     A deck is a collection of related flashcards. Create your
                     first deck based on what you want to learn.
                   </p>
-                  <ol className="list-decimal pl-5 space-y-2">
+                  <ol className="list-decimal pl-5 space-y-2 ml-4">
                     <li>Navigate to the &quot;Decks&quot; section</li>
                     <li>Click the &quot;Create New Deck&quot; button</li>
                     <li>
@@ -120,20 +124,20 @@ const GuidePage = () => {
 
           {/* Step 3: Add Cards */}
           <section id="add-cards" className="scroll-mt-20">
-            <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
               <div>
-                <div className="inline-block bg-oceanBlue/20 text-oceanBlue px-3 py-1 rounded-full text-sm font-medium mb-4">
+                <div className="inline-block px-3 py-1 bg-oceanBlue/10 text-oceanBlue text-sm rounded-full mb-4 font-montserrat">
                   Step 3
                 </div>
                 <h2 className="text-2xl md:text-3xl font-bold font-bricolage mb-4">
                   Add Cards to Your Deck
                 </h2>
                 <div className="space-y-4 text-gray-300 font-montserrat">
-                  <p>
+                  <p className="leading-relaxed">
                     Populate your deck with flashcards containing questions and
                     answers.
                   </p>
-                  <ol className="list-decimal pl-5 space-y-2">
+                  <ol className="list-decimal pl-5 space-y-2 ml-4">
                     <li>
                       Open your newly created deck by clicking &quot;View&quot;
                     </li>
@@ -150,39 +154,45 @@ const GuidePage = () => {
                   </ol>
                 </div>
               </div>
-              <div className="bg-gray-800 rounded-[22px] h-64 flex items-center justify-center">
-                <Image
-                  alt="Card Creation Illustration"
-                  src={CardImage}
-                  className="object-contain p-4 "
-                />
+              <div className="bg-background/30 rounded-xl border border-oceanBlue/20 h-64 overflow-hidden group hover:border-oceanBlue/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(44,183,190,0.15)]">
+                <div className="h-full flex items-center justify-center relative p-4">
+                  <div className="absolute inset-0 bg-gradient-to-br from-oceanBlue/5 to-transparent"></div>
+                  <Image
+                    alt="Card Creation Illustration"
+                    src={CardImage}
+                    className="object-contain z-10 group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
               </div>
             </div>
           </section>
 
           {/* Step 4: Study Session */}
           <section id="study-session" className="scroll-mt-20">
-            <div className="grid md:grid-cols-2 gap-8 items-center">
-              <div className="order-2 md:order-1 bg-gray-800 rounded-[22px] h-64 flex items-center justify-center">
-                <Image
-                  alt="Study Session Illustration"
-                  src={StudySession}
-                  className="object-contain p-4 "
-                />
+            <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
+              <div className="order-2 md:order-1 bg-background/30 rounded-xl border border-oceanBlue/20 h-64 overflow-hidden group hover:border-oceanBlue/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(44,183,190,0.15)]">
+                <div className="h-full flex items-center justify-center relative p-4">
+                  <div className="absolute inset-0 bg-gradient-to-br from-oceanBlue/5 to-transparent"></div>
+                  <Image
+                    alt="Study Session Illustration"
+                    src={StudySession}
+                    className="object-contain z-10 group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
               </div>
               <div className="order-1 md:order-2">
-                <div className="inline-block bg-oceanBlue/20 text-oceanBlue px-3 py-1 rounded-full text-sm font-medium mb-4">
+                <div className="inline-block px-3 py-1 bg-oceanBlue/10 text-oceanBlue text-sm rounded-full mb-4 font-montserrat">
                   Step 4
                 </div>
                 <h2 className="text-2xl md:text-3xl font-bold font-bricolage mb-4">
                   Start a Study Session
                 </h2>
                 <div className="space-y-4 text-gray-300 font-montserrat">
-                  <p>
+                  <p className="leading-relaxed">
                     Study your flashcards using Memory Ball&apos;s spaced
                     repetition system.
                   </p>
-                  <ol className="list-decimal pl-5 space-y-2">
+                  <ol className="list-decimal pl-5 space-y-2 ml-4">
                     <li>Return to your deck&apos;s main page</li>
                     <li>Click the &quot;Study Deck&quot; button</li>
                     <li>
@@ -205,20 +215,20 @@ const GuidePage = () => {
 
           {/* Step 5: Review Stats */}
           <section id="review-stats" className="scroll-mt-20">
-            <div className="grid md:grid-cols-2 gap-8 items-center">
+            <div className="grid md:grid-cols-2 gap-8 md:gap-12 items-center">
               <div>
-                <div className="inline-block bg-oceanBlue/20 text-oceanBlue px-3 py-1 rounded-full text-sm font-medium mb-4">
+                <div className="inline-block px-3 py-1 bg-oceanBlue/10 text-oceanBlue text-sm rounded-full mb-4 font-montserrat">
                   Step 5
                 </div>
                 <h2 className="text-2xl md:text-3xl font-bold font-bricolage mb-4">
                   Review Your Statistics
                 </h2>
                 <div className="space-y-4 text-gray-300 font-montserrat">
-                  <p>
+                  <p className="leading-relaxed">
                     Track your progress and see how your memory is improving
                     over time.
                   </p>
-                  <ol className="list-decimal pl-5 space-y-2">
+                  <ol className="list-decimal pl-5 space-y-2 ml-4">
                     <li>
                       After completing a study session, review your session
                       summary
@@ -238,33 +248,47 @@ const GuidePage = () => {
                   </ol>
                 </div>
               </div>
-              <div className="bg-gray-800 rounded-[22px] h-64 flex items-center justify-center">
-                <Image
-                  alt="Statistics Illustration"
-                  src={Stat}
-                  className="object-contain p-4 "
-                />
+              <div className="bg-background/30 rounded-xl border border-oceanBlue/20 h-64 overflow-hidden group hover:border-oceanBlue/50 transition-all duration-300 hover:shadow-[0_0_20px_rgba(44,183,190,0.15)]">
+                <div className="h-full flex items-center justify-center relative p-4">
+                  <div className="absolute inset-0 bg-gradient-to-br from-oceanBlue/5 to-transparent"></div>
+                  <Image
+                    alt="Statistics Illustration"
+                    src={Stat}
+                    className="object-contain z-10 group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
               </div>
             </div>
           </section>
         </div>
 
-        <div className="mt-20 text-center">
-          <h2 className="text-2xl font-bold font-bricolage mb-6">
-            Ready to Start Learning?
-          </h2>
-          <Link
-            href="/auth/register"
-            className="inline-block bg-button hover:bg-oceanBlue text-white font-bricolage py-3 text-lg font-bold px-8 rounded-[22px] transition duration-300"
-          >
-            Create Your Account
-          </Link>
-          <p className="mt-4 text-gray-400 font-poppins">
-            Already have an account?{" "}
-            <Link href="auth/login" className="text-oceanBlue hover:text-button">
-              Log in here
+        {/* Enhanced Call to Action */}
+        <div className="mt-24 bg-gradient-to-r from-background via-oceanBlue/10 to-background p-8 md:p-12 rounded-2xl text-center">
+          <div className="max-w-3xl mx-auto">
+            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 font-bricolage">
+              Ready to Start Learning?
+            </h2>
+            <p className="text-gray-300 mb-8 font-montserrat">
+              Join thousands of learners who have already improved their study
+              habits with Memory Ball. Start your journey today and unlock your
+              learning potential.
+            </p>
+            <Link
+              href="/auth/register"
+              className="inline-block bg-button hover:bg-oceanBlue text-white px-8 py-3 rounded-lg transition-all duration-300 font-poppins font-semibold shadow-lg hover:shadow-oceanBlue/20 hover:translate-y-[-2px] focus:outline-none focus:ring-2 focus:ring-oceanBlue/50"
+            >
+              Create Your Account
             </Link>
-          </p>
+            <p className="mt-6 text-gray-400 font-montserrat">
+              Already have an account?{" "}
+              <Link
+                href="/auth/login"
+                className="text-oceanBlue hover:text-white hover:underline transition-colors"
+              >
+                Log in here
+              </Link>
+            </p>
+          </div>
         </div>
       </div>
     </div>
