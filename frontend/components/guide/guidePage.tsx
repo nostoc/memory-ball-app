@@ -10,24 +10,7 @@ const GuidePage = () => {
   return (
     <div className="min-h-screen bg-background text-white">
       <div className="container mx-auto px-4 md:px-8 lg:px-16 py-8 md:py-16">
-        <Link
-          href="/"
-          className="inline-flex font-montserrat items-center text-oceanBlue hover:text-white hover:bg-oceanBlue/10 py-2 px-4 rounded-full transition-all duration-300 mb-8 border border-oceanBlue/20"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-5 w-5 mr-2"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fillRule="evenodd"
-              d="M9.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L7.414 9H15a1 1 0 110 2H7.414l2.293 2.293a1 1 0 010 1.414z"
-              clipRule="evenodd"
-            />
-          </svg>
-          Back to Home
-        </Link>
+        
 
         <header className="mb-16 text-center">
           

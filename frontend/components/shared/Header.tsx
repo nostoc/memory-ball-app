@@ -22,6 +22,7 @@ const Header = () => {
   // Updated navigation links with About page
   const navigationLinks = [
     { name: "Home", href: "/" },
+    { name: "Blog", href: "/blog"},
     { name: "Guide", href: "/guide" },
     { name: "About", href: "/about", hideWhenLoggedIn: true }, // New About link
     { name: "Decks", href: "/decks", authRequired: true },
