@@ -54,8 +54,7 @@ const Footer: React.FC<FooterProps> = ({ appName = "Memory Ball" }) => {
                 About
               </Link>
               
-              <Link href="contact-us" className="link link-hover">
-              Contact Us</Link>
+              
               
             </nav>
           </div>
