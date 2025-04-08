@@ -54,10 +54,10 @@ const StudySummary: React.FC<StudySummaryProps> = ({
             />
           </svg>
         </div>
-        <h2 className="text-3xl font-bold text-gray-800 mb-2">
+        <h2 className="text-3xl font-bold text-white mb-2">
           Study Session Complete!
         </h2>
-        <p className="text-gray-600">{sessionDate}</p>
+        <p className="text-gray-200">{sessionDate}</p>
       </div>
 
       <div className="bg-white shadow-md rounded-xl border border-gray-200 overflow-hidden mb-8">

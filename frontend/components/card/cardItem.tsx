@@ -108,7 +108,7 @@ const CardItem: React.FC<CardItemProps> = ({ card, onEdit, onDelete }) => {
       <div className="flex justify-end space-x-2 mt-2">
         <button
           onClick={(e) => handleButtonClick(e, onEdit)}
-          className="text-gray-700 hover:text-oceanBlue text-sm font-poppins px-3 py-1 rounded-[22px] hover:bg-gray-100 transition-colors flex items-center shadow-sm"
+          className="text-oceanBlue text-sm font-poppins px-3 py-1 rounded-[22px] bg-gray-100 transition-colors flex items-center shadow-sm"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -128,7 +128,7 @@ const CardItem: React.FC<CardItemProps> = ({ card, onEdit, onDelete }) => {
         </button>
         <button
           onClick={(e) => handleButtonClick(e, onDelete)}
-          className="text-gray-700 hover:text-red-600 text-sm font-poppins px-3 py-1 rounded-[22px] hover:bg-red-50 transition-colors flex items-center shadow-sm"
+          className=" text-red-600 text-sm font-poppins px-3 py-1 rounded-[22px] bg-red-50 transition-colors flex items-center shadow-sm"
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"

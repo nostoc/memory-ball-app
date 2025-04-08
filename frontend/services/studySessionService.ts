@@ -53,13 +53,11 @@ export const getSessionDetails = async (sessionId: string) => {
   return response.data;
 };
 
-
-// Get all sessions for a specific user
-export const getAllUserSessions = async () => {
-  const response = await api.get(`/v1/sessions/user/all`);
+// Modify the getAllUserSessions function
+export const getAllUserSessions = async (page = 1, limit = 10) => {
+  const response = await api.get(`/v1/sessions/user/all?page=${page}&limit=${limit}`);
   return response.data;
 };
-
 
 // Get due cards for a deck (cards that are due for review)
 export const getDueCards = async (deckId: string) => {
