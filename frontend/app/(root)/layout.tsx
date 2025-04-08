@@ -69,7 +69,6 @@ const bricolage = localFont({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://memoryball.online"),
   applicationName: "Memory Ball | Free Online Flash Cards",
   authors: [{ name: "Memory Ball" }],
   title: {
@@ -79,24 +78,7 @@ export const metadata: Metadata = {
   description: "Create, study and share flash cards for free. Boost your learning with Memory Ball's smart flash card system. Perfect for students, professionals, and lifelong learners.",
   keywords: "flash cards, online flash cards, free flash cards, study tools, learning, memorization, spaced repetition",
   openGraph: {
-    title: "Memory Ball - Free Online Flash Cards",
-    description: "Create and study flash cards for free. Perfect for students and lifelong learners.",
-    type: "website",
-    url: "https://memoryball.online",
-    images: [
-      {
-        url: 'https://memoryball.online/og-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'Memory Ball - Free Online Flash Cards',
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Memory Ball - Free Online Flash Cards",
-    description: "Create and study flash cards for free. Perfect for students and lifelong learners.",
-    creator: "@memoryball"
+    images: "https://memoryball.online/og-image.png"
   },
   verification: {
     google: "zS_mrSk4epSJgqZh_WMzpWY--hxvKqASL8pY8JNCD3Q"

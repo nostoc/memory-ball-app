@@ -15,29 +15,34 @@ const CardList: React.FC<CardListProps> = ({ deckId }) => {
   const [cards, setCards] = useState<Card[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalCards, setTotalCards] = useState(0);
+  const ITEMS_PER_PAGE = 6;
   const router = useRouter();
 
   const fetchCards = useCallback(async () => {
-  try {
-    setLoading(true);
-    const response = await getCardsByDeck(deckId);
+    try {
+      setLoading(true);
+      const response = await getCardsByDeck(deckId, currentPage, ITEMS_PER_PAGE);
 
-    // Fix: The response is already response.data from the service
-    if (response?.data?.cards) {
-      setCards(response.data.cards);
-    } else {
-      setCards([]);
+      if (response?.data?.cards) {
+        setCards(response.data.cards);
+        setTotalPages(response.totalPages);
+        setTotalCards(response.totalCards);
+      } else {
+        setCards([]);
+      }
+
+      setError(null);
+    } catch (err) {
+      console.error("Error fetching cards:", err);
+      setError("Failed to load cards. Please try again later.");
+      toast.error("Failed to load cards");
+    } finally {
+      setLoading(false);
     }
-
-    setError(null);
-  } catch (err) {
-    console.error("Error fetching cards:", err);
-    setError("Failed to load cards. Please try again later.");
-    toast.error("Failed to load cards");
-  } finally {
-    setLoading(false);
-  }
-}, [deckId]);
+  }, [deckId, currentPage]);
 
   useEffect(() => {
     fetchCards();
@@ -63,6 +68,40 @@ const CardList: React.FC<CardListProps> = ({ deckId }) => {
         toast.error("Failed to delete card");
       }
     }
+  };
+
+  const PaginationControls = () => {
+    return (
+      <div className="mt-8 flex justify-center items-center gap-4 font-montserrat">
+        <button
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+          className={`px-4 py-2 rounded-[22px] ${
+            currentPage === 1
+              ? "bg-gray-300 cursor-not-allowed"
+              : "bg-oceanBlue hover:bg-button text-white"
+          }`}
+        >
+          Previous
+        </button>
+
+        <span className="text-white">
+          Page {currentPage} of {totalPages}
+        </span>
+
+        <button
+          onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+          disabled={currentPage === totalPages}
+          className={`px-4 py-2 rounded-[22px] ${
+            currentPage === totalPages
+              ? "bg-gray-300 cursor-not-allowed"
+              : "bg-oceanBlue hover:bg-button text-white"
+          }`}
+        >
+          Next
+        </button>
+      </div>
+    );
   };
 
   if (loading)
@@ -172,7 +211,7 @@ const CardList: React.FC<CardListProps> = ({ deckId }) => {
         <div>
           <div className="mb-4">
             <p className="text-white font-montserrat">
-              {cards.length} card{cards.length !== 1 ? "s" : ""} in this deck
+              Showing {cards.length} of {totalCards} cards
             </p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
@@ -185,6 +224,7 @@ const CardList: React.FC<CardListProps> = ({ deckId }) => {
               />
             ))}
           </div>
+          {totalPages > 1 && <PaginationControls />}
         </div>
       )}
     </div>

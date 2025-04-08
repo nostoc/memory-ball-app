@@ -15,3 +15,14 @@ export interface CardFormData {
   answer: string;
   deck: string;
 }
+
+interface PaginatedCardsResponse {
+  status: string;
+  results: number;
+  totalPages: number;
+  currentPage: number;
+  totalCards: number;
+  data: {
+    cards: Card[];
+  };
+}

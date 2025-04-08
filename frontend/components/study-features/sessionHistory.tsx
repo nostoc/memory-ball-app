@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { getAllUserSessions } from "../../services/studySessionService";
 import Link from "next/link";
 import toast from "react-hot-toast";
@@ -17,36 +17,50 @@ interface SessionHistoryItem {
   incorrectAnswers: number;
 }
 
+interface PaginationData {
+  currentPage: number;
+  totalPages: number;
+  totalItems: number;
+  itemsPerPage: number;
+}
+
 const SessionHistory: React.FC = () => {
   const [sessions, setSessions] = useState<SessionHistoryItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [pagination, setPagination] = useState<PaginationData>({
+    currentPage: 1,
+    totalPages: 1,
+    totalItems: 0,
+    itemsPerPage: 10
+  });
+
+  const fetchSessions = useCallback(async (page: number) => {
+    try {
+      setLoading(true);
+      const response = await getAllUserSessions(page, pagination.itemsPerPage);
+
+      if (response?.status === "success" && response?.data?.sessions) {
+        setSessions(response.data.sessions);
+        setPagination(response.data.pagination);
+      } else {
+        setError("Could not load session history");
+        toast.error("Could not load session history");
+      }
+    } catch (err) {
+      console.error("Error fetching sessions:", err);
+      setError(
+        "Failed to load your session history. Please try again later."
+      );
+      toast.error("Failed to load your session history");
+    } finally {
+      setLoading(false);
+    }
+  }, [pagination.itemsPerPage]);
 
   useEffect(() => {
-    const fetchSessions = async () => {
-      try {
-        setLoading(true);
-        const response = await getAllUserSessions();
-
-        if (response?.status === "success" && response?.data?.sessions) {
-          setSessions(response.data.sessions);
-        } else {
-          setError("Could not load session history");
-          toast.error("Could not load session history");
-        }
-      } catch (err) {
-        console.error("Error fetching sessions:", err);
-        setError(
-          "Failed to load your session history. Please try again later."
-        );
-        toast.error("Failed to load your session history");
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchSessions();
-  }, []);
+    fetchSessions(1);
+  }, [fetchSessions]);
 
   // Format date
   const formatDate = (dateStr: string) => {
@@ -176,6 +190,52 @@ const SessionHistory: React.FC = () => {
     );
   }
 
+  const PaginationControls = () => {
+    const pages = Array.from({ length: pagination.totalPages }, (_, i) => i + 1);
+
+    return (
+      <div className="flex justify-center items-center space-x-2 mt-6 mb-4">
+        <button
+          onClick={() => fetchSessions(pagination.currentPage - 1)}
+          disabled={pagination.currentPage === 1}
+          className={`px-3 py-1 rounded-md ${
+            pagination.currentPage === 1
+              ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+              : 'bg-oceanBlue text-white hover:bg-button'
+          }`}
+        >
+          Previous
+        </button>
+        
+        {pages.map((page) => (
+          <button
+            key={page}
+            onClick={() => fetchSessions(page)}
+            className={`px-3 py-1 rounded-md ${
+              pagination.currentPage === page
+                ? 'bg-button text-white'
+                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+            }`}
+          >
+            {page}
+          </button>
+        ))}
+        
+        <button
+          onClick={() => fetchSessions(pagination.currentPage + 1)}
+          disabled={pagination.currentPage === pagination.totalPages}
+          className={`px-3 py-1 rounded-md ${
+            pagination.currentPage === pagination.totalPages
+              ? 'bg-gray-200 text-gray-500 cursor-not-allowed'
+              : 'bg-oceanBlue text-white hover:bg-button'
+          }`}
+        >
+          Next
+        </button>
+      </div>
+    );
+  };
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="mb-8">
@@ -293,6 +353,10 @@ const SessionHistory: React.FC = () => {
             </tbody>
           </table>
         </div>
+        <PaginationControls />
+      </div>
+      <div className="text-center mt-4 text-gray-300 font-montserrat">
+        Showing {((pagination.currentPage - 1) * pagination.itemsPerPage) + 1} to {Math.min(pagination.currentPage * pagination.itemsPerPage, pagination.totalItems)} of {pagination.totalItems} sessions
       </div>
     </div>
   );
