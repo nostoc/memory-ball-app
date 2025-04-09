@@ -1,6 +1,8 @@
 import type { Config } from "tailwindcss";
 import daisyui from "daisyui";
-export default {
+import typography from "@tailwindcss/typography";
+
+const config: Config = {
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -21,9 +23,11 @@ export default {
       fontFamily: {
         bricolage: ["var(--font-bricolage)"],
         montserrat: ["var(--font-montserrat)"],
-        poppins: "var(--font-poppins)",
+        poppins: ["var(--font-poppins)"],
       },
     },
   },
-  plugins: [daisyui],
-} satisfies Config;
+  plugins: [daisyui, typography],
+};
+
+export default config;

@@ -1,7 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { FaFacebook, FaTwitter, FaEnvelope, FaLinkedin } from "react-icons/fa";
 import Image from "next/image";
 import Icon from "../../public/icon.png";
@@ -13,8 +12,7 @@ interface FooterProps {
 
 const Footer: React.FC<FooterProps> = ({ appName = "Memory Ball" }) => {
   const currentYear = new Date().getFullYear();
-  const router = useRouter();
-  const [isLoggedIn, setIsLoggedIn] = useState(AuthState.isAuthenticated);
+  const [, setIsLoggedIn] = useState(AuthState.isAuthenticated);
 
   // Check auth state on component render and when it changes
   useEffect(() => {
@@ -29,13 +27,6 @@ const Footer: React.FC<FooterProps> = ({ appName = "Memory Ball" }) => {
     return () => clearInterval(interval);
   }, []);
 
-  const handleNavigate = (href: string, authRequired: boolean = false) => {
-    if (authRequired && !isLoggedIn) {
-      router.push("/auth/login");
-      return;
-    }
-    router.push(href);
-  };
 
   return (
     <footer className="footer py-10 bg-neutral text-neutral-content mt-auto font-bricolage">
@@ -62,25 +53,9 @@ const Footer: React.FC<FooterProps> = ({ appName = "Memory Ball" }) => {
               <Link href="/about" className="link link-hover">
                 About
               </Link>
-              {/* Protected Links */}
-              <button
-                onClick={() => handleNavigate("/create", true)}
-                className="link link-hover text-left"
-              >
-                Create Cards
-              </button>
-              <button
-                onClick={() => handleNavigate("/decks", true)}
-                className="link link-hover text-left"
-              >
-                My Decks
-              </button>
-              <button
-                onClick={() => handleNavigate("/study", true)}
-                className="link link-hover text-left"
-              >
-                Study Mode
-              </button>
+              
+              
+              
             </nav>
           </div>
 
@@ -91,6 +66,10 @@ const Footer: React.FC<FooterProps> = ({ appName = "Memory Ball" }) => {
               <Link href="/guide" className="link link-hover">
                 Help Center
               </Link>
+              <Link className="link link-hover" href="/blog">
+                Blog
+              </Link>
+
               <Link href="/#" className="link link-hover">
                 Study Tips
               </Link>
@@ -139,7 +118,7 @@ const Footer: React.FC<FooterProps> = ({ appName = "Memory Ball" }) => {
                   className="flex items-center gap-2 text-sm opacity-75 hover:opacity-100 transition-opacity"
                 >
                   <FaEnvelope className="text-lg" />
-                  contact@memoryball.online
+                  hello@memoryball.online
                 </Link>
               </div>
             </div>
