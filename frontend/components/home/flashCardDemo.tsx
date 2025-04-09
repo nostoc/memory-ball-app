@@ -11,14 +11,14 @@ const FlashCardDemo = () => {
 
   return (
     <section className="container mx-auto py-8 md:py-12 my-10 md:my-20">
-      <div className="max-w-7xl">
+      <div className="max-w-7xl mx-auto"> {/* Added mx-auto here */}
         <div className="text-center mb-8 md:mb-12">
           <h1 className="text-3xl md:text-4xl lg:text-[56px] font-bold text-white text-center mb-8 md:mb-20 font-bricolage">
             Try Our{" "}
             <span className="bg-white text-title p-2 mt-2 md:mt-0 inline-block">Interactive</span>{" "}
             Flashcards
           </h1>
-          <h3 className="text-xl md:text-2xl text-gray-300 font-bricolage max-w-3xl mx-auto px-4">
+          <h3 className="text-xl md:text-2xl text-gray-300 font-bricolage max-w-4xl mx-auto px-4"> {/* Changed max-w-3xl to max-w-4xl */}
             Flip the card below to see how our flashcards work. Create your own
             decks and start improving your memory today!
           </h3>
@@ -61,7 +61,7 @@ const FlashCardDemo = () => {
 
           {/* Instructions */}
           <div className="w-full max-w-lg text-white px-4 md:px-0">
-            <h3 className="text-xl md:text-2xl font-bricolage font-bold mb-4">
+            <h3 className="text-xl md:text-2xl font-bricolage font-bold mb-4 max-w-xl"> {/* Added max-w-xl */}
               How It Works
             </h3>
             <ul className="space-y-4 font-poppins text-sm md:text-base">

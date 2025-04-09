@@ -12,6 +12,7 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
   const mobileMenuRef = useRef<HTMLDivElement>(null);
+  const toggleButtonRef = useRef<HTMLButtonElement>(null);
   const router = useRouter();
   const pathname = usePathname();
 
@@ -57,10 +58,13 @@ const Header = () => {
 
       if (
         mobileMenuRef.current &&
-        !mobileMenuRef.current.contains(event.target as Node)
+        !mobileMenuRef.current.contains(event.target as Node) &&
+        toggleButtonRef.current &&
+        !toggleButtonRef.current.contains(event.target as Node)
       ) {
         setIsMobileMenuOpen(false);
       }
+      
     };
 
     document.addEventListener("mousedown", handleClickOutside);
@@ -132,6 +136,7 @@ const Header = () => {
 
         {/* Mobile menu button */}
         <button
+          ref={toggleButtonRef}
           className="md:hidden p-2 rounded-md text-white hover:bg-oceanBlue/20 transition-colors"
           onClick={toggleMobileMenu}
           aria-label="Toggle menu"

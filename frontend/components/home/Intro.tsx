@@ -2,6 +2,7 @@ import Image from "next/image";
 import React from "react";
 import StudyingCuate from "../../public/images/Studying-pana.png";
 import { TiTick } from "react-icons/ti";
+import Link from "next/link";
 
 const Intro = () => {
   return (
@@ -36,6 +37,14 @@ const Intro = () => {
               <p className="text-white font-bricolage text-base md:text-xl">Any Time, Any Place</p>
             </div>
           </div>
+          <Link 
+            href="/auth/login" 
+            className="bg-button hover:bg-button/90 text-white font-bricolage font-medium text-lg 
+            md:text-xl px-8 py-3 rounded-lg mt-8 mx-auto md:mx-0 w-[200px] md:w-[180px] 
+            transition-all duration-300 hover:scale-105 hover:shadow-lg text-center"
+          >
+            Get Started
+          </Link>
         </div>
         <Image
           src={StudyingCuate}
