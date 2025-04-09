@@ -118,7 +118,7 @@ const Footer: React.FC<FooterProps> = ({ appName = "Memory Ball" }) => {
                   className="flex items-center gap-2 text-sm opacity-75 hover:opacity-100 transition-opacity"
                 >
                   <FaEnvelope className="text-lg" />
-                  contact@memoryball.online
+                  hello@memoryball.online
                 </Link>
               </div>
             </div>
