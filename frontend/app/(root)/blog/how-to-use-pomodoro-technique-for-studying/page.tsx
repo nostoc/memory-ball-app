@@ -12,10 +12,10 @@ export async function generateMetadata(): Promise<Metadata> {
     description: meta.excerpt,
     authors: [{ name: meta.author }],
     keywords: meta.tags,
-    alternates: {
-      canonical: `https://memoryball.com/blog/how-to-use-pomodoro-technique-for-studying`,
-    }
-  }
+   alternates: {
+      canonical: `https://memoryball.online/blog/how-to-use-pomodoro-technique-for-studying`,
+    },
+  };
 }
 
 export default function Page() {

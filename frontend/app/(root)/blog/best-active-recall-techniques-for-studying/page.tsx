@@ -13,9 +13,9 @@ export async function generateMetadata(): Promise<Metadata> {
     authors: [{ name: meta.author }],
     keywords: meta.tags,
     alternates: {
-      canonical: `https://memoryball.com/blog/best-active-recall-techniques-for-studying`,
-    }
-  }
+      canonical: `https://memoryball.online/blog/best-active-recall-techniques-for-studying`,
+    },
+  };
 }
 
 export default function Page() {
