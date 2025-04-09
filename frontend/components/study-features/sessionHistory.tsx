@@ -295,7 +295,7 @@ const SessionHistory: React.FC = () => {
                 <tr key={session._id} className="hover:bg-gray-50">
                   <td className="px-6 py-4 whitespace-nowrap">
                     <div className="text-sm font-medium text-title font-montserrat">
-                      {session.deck.title}
+                      {session.deck?.title}
                     </div>
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap">
