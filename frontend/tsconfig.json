@@ -20,8 +20,18 @@
     ],
     "paths": {
       "@/*": ["./*"]
-    }
+    },
+    "typeRoots": ["./types", "./node_modules/@types"]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/(root)/blog/the-science-behind-spaced-repetition/page.mdx", "next.config.mjs"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    "**/*.mdx",
+    "types/**/*.d.ts",
+    ".next/types/**/*.ts",
+    "app/(root)/blog/the-science-behind-spaced-repetition/page.mdx",
+    "next.config.mjs"
+  ],
   "exclude": ["node_modules"]
 }

@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   description: 'Explore articles about active recall, study techniques, and memory improvement',
 }
 
-interface BlogMeta {
+export interface BlogMeta {
   title: string
   excerpt: string
   date: string
@@ -19,23 +19,43 @@ interface BlogMeta {
   tags: string[]
 }
 
-interface MDXModule {
-  meta: BlogMeta
-}
-
 export default async function BlogIndex() {
-  const posts = [
+  const posts: Array<{ slug: string; meta: BlogMeta }> = [
     {
       slug: 'best-active-recall-techniques-for-studying',
-      meta: (await import('./best-active-recall-techniques-for-studying/page.mdx')).meta,
+      meta: {
+        title: "Best Active Recall Techniques for Studying: Boost Memory & Grades",
+        excerpt: "Discover 7 science-backed active recall methods...",
+        date: "2025-04-01",
+        author: "Hansika Karunathilake",
+        authorImage: "/team/hansika.jpeg",
+        coverImage: "/active-recall-cover.png",
+        tags: ["active recall", "study techniques", "memory improvement", "exam preparation"],
+      }
     },
     {
       slug: 'how-to-use-pomodoro-technique-for-studying',
-      meta: (await import('./how-to-use-pomodoro-technique-for-studying/page.mdx')).meta,
+      meta: {
+        title: "How to Use the Pomodoro Technique for Studying: Stay Focused & Avoid Burnout",
+        excerpt: "Master the Pomodoro Technique to improve focus, beat procrastination, and study in short, effective bursts. Perfect for students and exam prep.",
+        date: "2025-04-08",
+        author: "Hansika Karunathilake",
+        authorImage: "/team/hansika.jpeg",
+        coverImage: "/pomodoro-technique-cover.png",
+        tags: ["pomodoro technique", "study tips", "time management", "productivity", "study tools"]
+      }
     },
     {
       slug: 'the-science-behind-spaced-repetition',
-      meta: (await import('./the-science-behind-spaced-repetition/page.mdx')).meta,
+      meta: {
+        title: "Spaced Repetition: The Secret to Long-Term Learning and Better Grades",
+        excerpt: "Struggling to retain information? Learn how spaced repetition can dramatically improve your memory and performance with these actionable tips.",
+        date: "2025-04-08",
+        author: "Janitha Karunarathna",
+        authorImage: "/team/janitha.jpeg",
+        coverImage: "/spaced-repetition-cover.png",
+        tags: ["spaced repetition", "memory techniques", "study tools", "long-term retention"]
+      }
     }
   ].sort((a, b) => 
     new Date(b.meta.date).getTime() - new Date(a.meta.date).getTime()
@@ -91,7 +111,7 @@ export default async function BlogIndex() {
         </div>
       </div>
 
-      <div className="w-full">
+      <div className="w-full mb-10">
         <CallToAction />
       </div>
     </div>
