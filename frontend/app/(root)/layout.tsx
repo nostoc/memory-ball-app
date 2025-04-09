@@ -77,9 +77,6 @@ export const metadata: Metadata = {
   },
   description: "Create, study and share flash cards for free. Boost your learning with Memory Ball's smart flash card system. Perfect for students, professionals, and lifelong learners.",
   keywords: "flash cards, online flash cards, free flash cards, study tools, learning, memorization, spaced repetition",
-  openGraph: {
-    images: "https://memoryball.online/og-image.png"
-  },
   verification: {
     google: "zS_mrSk4epSJgqZh_WMzpWY--hxvKqASL8pY8JNCD3Q"
   },

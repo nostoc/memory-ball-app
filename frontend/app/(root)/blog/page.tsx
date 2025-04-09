@@ -1,68 +1,119 @@
-import Link from "next/link";
-import { getSortedPostsData } from "@/lib/blog";
-import BlogCard from "@/components/blog/BlogCard";
-import BlogHeader from "@/components/blog/BlogHeader";
+import { Metadata } from 'next'
+import Link from 'next/link'
+import Image from 'next/image'
+import BlogHeader from '@/components/blog/BlogHeader'
+import CallToAction from '@/components/common/CallToAction'
 
-export const metadata = {
-  title: "Blog | Memory Ball",
-  description:
-    "Articles about effective learning techniques and memory enhancement",
-};
+export const metadata: Metadata = {
+  title: 'Blog | Memory Ball',
+  description: 'Explore articles about active recall, study techniques, and memory improvement',
+}
 
-export default function BlogPage() {
-  const allPostsData = getSortedPostsData();
+export interface BlogMeta {
+  title: string
+  excerpt: string
+  date: string
+  author: string
+  authorImage: string
+  coverImage: string
+  tags: string[]
+}
+
+export default async function BlogIndex() {
+  const posts: Array<{ slug: string; meta: BlogMeta }> = [
+    {
+      slug: 'best-active-recall-techniques-for-studying',
+      meta: {
+        title: "Best Active Recall Techniques for Studying: Boost Memory & Grades",
+        excerpt: "Discover 7 science-backed active recall methods...",
+        date: "2025-04-01",
+        author: "Hansika Karunathilake",
+        authorImage: "/team/hansika.jpeg",
+        coverImage: "/active-recall-cover.png",
+        tags: ["active recall", "study techniques", "memory improvement", "exam preparation"],
+      }
+    },
+    {
+      slug: 'how-to-use-pomodoro-technique-for-studying',
+      meta: {
+        title: "How to Use the Pomodoro Technique for Studying: Stay Focused & Avoid Burnout",
+        excerpt: "Master the Pomodoro Technique to improve focus, beat procrastination, and study in short, effective bursts. Perfect for students and exam prep.",
+        date: "2025-04-08",
+        author: "Hansika Karunathilake",
+        authorImage: "/team/hansika.jpeg",
+        coverImage: "/pomodoro-technique-cover.png",
+        tags: ["pomodoro technique", "study tips", "time management", "productivity", "study tools"]
+      }
+    },
+    {
+      slug: 'the-science-behind-spaced-repetition',
+      meta: {
+        title: "Spaced Repetition: The Secret to Long-Term Learning and Better Grades",
+        excerpt: "Struggling to retain information? Learn how spaced repetition can dramatically improve your memory and performance with these actionable tips.",
+        date: "2025-04-08",
+        author: "Janitha Karunarathna",
+        authorImage: "/team/janitha.jpeg",
+        coverImage: "/spaced-repetition-cover.png",
+        tags: ["spaced repetition", "memory techniques", "study tools", "long-term retention"]
+      }
+    }
+  ].sort((a, b) => 
+    new Date(b.meta.date).getTime() - new Date(a.meta.date).getTime()
+  );
 
   return (
-    <div className="min-h-screen bg-background text-white">
-      <div className="container mx-auto px-4 md:px-8 lg:px-16 py-8 md:py-16">
-       
-
-        <BlogHeader />
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-          {allPostsData.map((post) => (
-            <BlogCard
+    <div className="flex flex-col items-center min-h-screen bg-background">
+      <BlogHeader />
+      
+      <div className="w-full max-w-7xl px-4 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {posts.map((post) => (
+            <Link 
               key={post.slug}
-              title={post.title}
-              excerpt={post.excerpt}
-              date={post.date}
-              author={post.author}
-              authorImage={post.authorImage}
-              slug={post.slug}
-              coverImage={post.coverImage}
-              tags={post.tags}
-            />
+              href={`/blog/${post.slug}`}
+              className="group hover:transform hover:scale-105 transition-all duration-200"
+            >
+              <div className="bg-gray-800 rounded-xl overflow-hidden h-full flex flex-col">
+                <div className="relative aspect-video">
+                  <Image
+                    src={post.meta.coverImage}
+                    alt={post.meta.title || ""}
+                    fill
+                    priority
+                    className="object-cover"
+                  />
+                </div>
+                <div className="p-6 flex flex-col flex-grow">
+                  <h2 className="text-xl font-semibold text-white mb-2 line-clamp-2">
+                    {post.meta.title}
+                  </h2>
+                  <p className="text-gray-400 text-sm mb-4 flex-grow line-clamp-3">
+                    {post.meta.excerpt}
+                  </p>
+                  <div className="flex items-center gap-3 mt-auto">
+                    <div className="relative w-8 h-8">
+                      <Image
+                        src={post.meta.authorImage}
+                        alt={post.meta.author || ""}
+                        fill
+                        className="rounded-full object-cover"
+                      />
+                    </div>
+                    <div>
+                      <p className="text-sm text-white">{post.meta.author}</p>
+                      <p className="text-xs text-gray-400">{post.meta.date}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Link>
           ))}
         </div>
+      </div>
 
-        {/* Enhanced Call to Action */}
-        <div className="mt-24 bg-gradient-to-r from-background via-oceanBlue/10 to-background p-8 md:p-12 rounded-2xl text-center">
-          <div className="max-w-3xl mx-auto">
-            <h2 className="text-2xl md:text-3xl font-bold text-white mb-4 font-bricolage">
-              Ready to Start Learning?
-            </h2>
-            <p className="text-gray-300 mb-8 font-montserrat">
-              Apply these learning techniques with Memory Ball. Create your
-              account today and start improving your memory.
-            </p>
-            <Link
-              href="/auth/register"
-              className="inline-block bg-button hover:bg-oceanBlue text-white px-8 py-3 rounded-lg transition-all duration-300 font-poppins font-semibold shadow-lg hover:shadow-oceanBlue/20 hover:translate-y-[-2px] focus:outline-none focus:ring-2 focus:ring-oceanBlue/50"
-            >
-              Create Your Account
-            </Link>
-            <p className="mt-6 text-gray-400 font-montserrat">
-              Already have an account?{" "}
-              <Link
-                href="/auth/login"
-                className="text-oceanBlue hover:text-white hover:underline transition-colors"
-              >
-                Log in here
-              </Link>
-            </p>
-          </div>
-        </div>
+      <div className="w-full mb-10">
+        <CallToAction />
       </div>
     </div>
-  );
+  )
 }
