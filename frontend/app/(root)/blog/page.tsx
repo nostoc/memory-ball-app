@@ -5,9 +5,10 @@ import BlogHeader from '@/components/blog/BlogHeader'
 import CallToAction from '@/components/common/CallToAction'
 
 export const metadata: Metadata = {
-  title: 'Blog | Memory Ball',
-  description: 'Explore articles about active recall, study techniques, and memory improvement',
-}
+  title: "Blog | Memory Ball",
+  description:
+    "Explore articles about active recall, study techniques, and memory improvement",
+  };
 
 export interface BlogMeta {
   title: string

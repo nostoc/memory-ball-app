@@ -13,9 +13,9 @@ export async function generateMetadata(): Promise<Metadata> {
     authors: [{ name: meta.author }],
     keywords: meta.tags,
     alternates: {
-      canonical: `https://memoryball.com/blog/the-science-behind-spaced-repetition`,
-    }
-  }
+      canonical: `https://memoryball.online/blog/the-science-behind-spaced-repetition`,
+    },
+  };
 }
 
 export default function Page() {
