@@ -9,6 +9,23 @@ const Intro = () => {
     <section className="py-4 md:py-8 container mx-auto my-8 md:my-20 px-4 md:px-8">
       <div className="flex flex-col md:flex-row justify-around items-center gap-8 md:gap-4">
         <div className="p-2 flex flex-col justify-start">
+          <div className="mb-6 md:mb-8 flex justify-center md:justify-start">
+            <a 
+              href="https://www.producthunt.com/posts/memory-ball-free-online-flash-cards?embed=true&utm_source=badge-featured&utm_medium=badge&utm_souce=badge-memory&#0045;ball&#0045;free&#0045;online&#0045;flash&#0045;cards" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-block"
+            >
+              <img 
+                src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=951514&theme=neutral&t=1744307247101" 
+                alt="Memory Ball | Free Online Flash Cards - Free online flash cards | Product Hunt" 
+                width="200" 
+                height="43" 
+                style={{ width: '200px', height: '43px' }}
+                className="md:w-[250px] md:h-[54px]"
+              />
+            </a>
+          </div>
           <h1 className="text-white font-bold font-bricolage text-3xl md:text-5xl lg:text-[64px] text-center md:text-left">
             Bounce Your Way to{" "}
             <span className="block mt-4 md:mt-6 lg:mt-8">
