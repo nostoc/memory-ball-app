@@ -145,3 +145,149 @@ exports.getDeckStats = catchAsync(async (req, res, next) => {
     }
   });
 });
+
+// Get all public decks with filtering and pagination
+exports.getPublicDecks = catchAsync(async (req, res, next) => {
+  // Parse query parameters
+  const page = parseInt(req.query.page, 10) || 1;
+  const limit = parseInt(req.query.limit, 10) || 9;
+  const skip = (page - 1) * limit;
+  const searchQuery = req.query.search || '';
+  const tagFilter = req.query.tag || '';
+
+  // Build query
+  let query = { isPublic: true };
+
+  // Add search functionality
+  if (searchQuery) {
+    query.$or = [
+      { title: { $regex: searchQuery, $options: 'i' } },
+      { description: { $regex: searchQuery, $options: 'i' } }
+    ];
+  }
+  
+  // Add tag filtering
+  if (tagFilter) {
+    query.tags = tagFilter;
+  }
+
+  // Get total count for pagination
+  const totalDecks = await Deck.countDocuments(query);
+  
+  // Execute query with population of owner's name
+  const decks = await Deck.find(query)
+    .populate({ path: 'owner', select: 'name' })
+    .sort({ createdAt: -1 })
+    .skip(skip)
+    .limit(limit);
+
+  // Get card count for each deck
+  const decksWithCardCount = await Promise.all(
+    decks.map(async (deck) => {
+      const cardCount = await Card.countDocuments({ deck: deck._id });
+      const deckObj = deck.toObject();
+      deckObj.cardCount = cardCount;
+      return deckObj;
+    })
+  );
+  
+  res.status(200).json({
+    status: 'success',
+    results: decks.length,
+    totalPages: Math.ceil(totalDecks / limit),
+    currentPage: page,
+    totalDecks,
+    data: {
+      decks: decksWithCardCount
+    }
+  });
+});
+
+// Get a specific public deck with its cards
+exports.getPublicDeck = catchAsync(async (req, res, next) => {
+  const deck = await Deck.findById(req.params.id)
+    .populate({ path: 'owner', select: 'name' });
+  
+  if (!deck) {
+    return next(new AppError('No deck found with that ID', 404));
+  }
+  
+  if (!deck.isPublic) {
+    return next(new AppError('This deck is not public', 403));
+  }
+  
+  // Get cards with pagination
+  const page = parseInt(req.query.page, 10) || 1;
+  const limit = parseInt(req.query.limit, 10) || 10; // Default to 10 cards per page
+  const skip = (page - 1) * limit;
+  
+  const totalCards = await Card.countDocuments({ deck: deck._id });
+  const cards = await Card.find({ deck: deck._id })
+    .sort({ createdAt: 1 })
+    .skip(skip)
+    .limit(limit);
+  
+  res.status(200).json({
+    status: 'success',
+    data: {
+      deck,
+      cards: {
+        results: cards.length,
+        totalPages: Math.ceil(totalCards / limit),
+        currentPage: page,
+        totalCards,
+        cards
+      }
+    }
+  });
+});
+
+// Copy a public deck to the user's collection
+exports.copyDeck = catchAsync(async (req, res, next) => {
+  const originalDeckId = req.params.id;
+  
+  // Find the original deck
+  const originalDeck = await Deck.findById(originalDeckId);
+  
+  if (!originalDeck) {
+    return next(new AppError('No deck found with that ID', 404));
+  }
+  
+  if (!originalDeck.isPublic) {
+    return next(new AppError('This deck is not public and cannot be copied', 403));
+  }
+  
+  // Create a new deck with copied properties
+  const newDeck = await Deck.create({
+    title: `${originalDeck.title} (Copy)`,
+    description: originalDeck.description,
+    isPublic: false, // Default copied decks to private
+    tags: originalDeck.tags,
+    owner: req.user.id
+  });
+  
+  // Copy all cards from original deck
+  const originalCards = await Card.find({ deck: originalDeckId });
+  
+  const cardPromises = originalCards.map(card => {
+    return Card.create({
+      question: card.question,
+      answer: card.answer,
+      deck: newDeck._id,
+      // Reset learning progress for the new user
+      difficulty: 0,
+      nextReview: new Date(),
+      reviewCount: 0
+    });
+  });
+  
+  await Promise.all(cardPromises);
+  
+  res.status(201).json({
+    status: 'success',
+    message: 'Deck successfully copied to your collection',
+    data: {
+      deck: newDeck
+    }
+  });
+});

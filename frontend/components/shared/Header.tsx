@@ -25,7 +25,10 @@ const Header = () => {
     { name: "Home", href: "/" },
     { name: "Blog", href: "/blog"},
     { name: "Guide", href: "/guide" },
-    { name: "About", href: "/about", hideWhenLoggedIn: true }, // New About link
+    { name: "About", href: "/about", hideWhenLoggedIn: true },
+    { name: "Community", href: "/community"},
+    { name: "Public Decks", href: "/community/public-decks", hideWhenLoggedIn: true },
+    { name: "My Decks", href: "/decks/my-decks", authRequired: true },
     { name: "Decks", href: "/decks", authRequired: true },
     { name: "Create Deck", href: "/decks/new", authRequired: true },
     { name: "Study Sessions", href: "/sessions", authRequired: true },
