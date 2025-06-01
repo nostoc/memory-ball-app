@@ -99,25 +99,43 @@ exports.updateDeck = catchAsync(async (req, res, next) => {
 exports.deleteDeck = catchAsync(async (req, res, next) => {
   // Find the deck first to check ownership
   const deck = await Deck.findById(req.params.id);
-  
+
   if (!deck) {
-    return next(new AppError('No deck found with that ID', 404));
+    return next(new AppError("No deck found with that ID", 404));
   }
-  
+
   // Check if the deck belongs to the current user
   if (deck.owner.toString() !== req.user.id) {
-    return next(new AppError('You do not have permission to delete this deck', 403));
+    return next(
+      new AppError("You do not have permission to delete this deck", 403)
+    );
   }
-  
+
+  // Store the deck title before deletion (for session updates)
+  const deckTitle = deck.title;
+
   // Delete all cards associated with this deck
   await Card.deleteMany({ deck: req.params.id });
-  
+
+  // Update any study sessions that reference this deck
+  // We keep the sessions but mark the deck as deleted
+  const Session = require("../models/sessionModel");
+  await Session.updateMany(
+    { deck: req.params.id },
+    {
+      $set: {
+        "deck.title": `${deckTitle} (Deleted)`,
+        deckDeleted: true,
+      },
+    }
+  );
+
   // Delete the deck
   await Deck.findByIdAndDelete(req.params.id);
-  
+
   res.status(204).json({
-    status: 'success',
-    data: null
+  status: "success",
+    data: null,
   });
 });
 

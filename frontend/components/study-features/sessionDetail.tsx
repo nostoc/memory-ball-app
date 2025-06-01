@@ -8,7 +8,7 @@ interface CardResult {
     _id: string;
     question: string;
     answer: string;
-  };
+  } | null;
   isCorrect: boolean;
   timeSpent: number;
 }
@@ -18,7 +18,8 @@ interface SessionData {
   deck: {
     _id: string;
     title: string;
-  };
+  } | null;
+  deckDeleted?: boolean;
   startTime: string;
   endTime: string;
   cardsStudied: number;
@@ -204,7 +205,7 @@ const SessionDetail: React.FC<SessionDetailProps> = ({ sessionId }) => {
             <div className="space-y-3">
               <div>
                 <p className="text-sm text-gray-500 font-montserrat">Deck</p>
-                <p className="font-medium text-title">{session.deck.title}</p>
+                <p className="font-medium text-title">{session.deck?.title || "Deleted Deck"}</p>
               </div>
               <div>
                 <p className="text-sm text-gray-500 font-montserrat">Date</p>
@@ -300,7 +301,7 @@ const SessionDetail: React.FC<SessionDetailProps> = ({ sessionId }) => {
               </div>
             </div>
             <Link
-              href={`/decks/${session.deck._id}/study`}
+              href={`/decks/${session.deck?._id}/study`}
               className="block w-full text-center bg-button hover:bg-oceanBlue text-white font-medium py-2 px-4 rounded-[22px] transition duration-300"
             >
               Study Again
@@ -332,13 +333,13 @@ const SessionDetail: React.FC<SessionDetailProps> = ({ sessionId }) => {
                         <p className="text-sm text-gray-600 mb-1 font-montserrat">
                           Question:
                         </p>
-                        <p className="text-title">{result.card.question}</p>
+                        <p className="text-title">{result.card?.question}</p>
                       </div>
                       <div>
                         <p className="text-sm text-gray-600 mb-1 font-montserrat">
                           Answer:
                         </p>
-                        <p className="text-title">{result.card.answer}</p>
+                        <p className="text-title">{result.card?.answer}</p>
                       </div>
                     </div>
 

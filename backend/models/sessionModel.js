@@ -3,43 +3,47 @@ const mongoose = require('mongoose');
 const sessionSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.ObjectId,
-    ref: 'User',
-    required: [true, 'A session must belong to a user']
+    ref: "User",
+    required: [true, "A session must belong to a user"],
   },
   deck: {
     type: mongoose.Schema.ObjectId,
-    ref: 'Deck',
-    required: [true, 'A session must belong to a deck']
+    ref: "Deck",
+    required: [true, "A session must belong to a deck"],
+  },
+  deckDeleted: {
+    type: Boolean,
+    default: false,
   },
   startTime: {
     type: Date,
-    default: Date.now
+    default: Date.now,
   },
   endTime: {
-    type: Date
+    type: Date,
   },
   cardsStudied: {
     type: Number,
-    default: 0
+    default: 0,
   },
   correctAnswers: {
     type: Number,
-    default: 0
+    default: 0,
   },
   incorrectAnswers: {
     type: Number,
-    default: 0
+    default: 0,
   },
   cardResults: [
     {
       card: {
         type: mongoose.Schema.ObjectId,
-        ref: 'Card'
+        ref: "Card",
       },
       isCorrect: Boolean,
-      timeSpent: Number // in milliseconds
-    }
-  ]
+      timeSpent: Number, // in milliseconds
+    },
+  ],
 });
 
 // Calculate duration in minutes

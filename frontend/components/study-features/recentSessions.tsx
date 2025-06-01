@@ -7,7 +7,7 @@ interface RecentActivity {
   cardsStudied: number;
   correctAnswers: number;
   incorrectAnswers: number;
-  deck: {
+  deck?: {
     _id: string;
     title: string;
   };
@@ -124,7 +124,7 @@ const RecentSessions: React.FC<RecentSessionsProps> = ({ sessions }) => {
               <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
                 <div>
                   <h3 className="font-medium text-gray-800 mb-1">
-                    {session.deck.title}
+                    {session.deck?.title}
                   </h3>
                   <p className="text-xs text-gray-500">
                     {getTimeSince(session.startTime)}
