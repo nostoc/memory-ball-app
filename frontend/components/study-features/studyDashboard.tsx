@@ -21,10 +21,11 @@ interface RecentActivity {
   cardsStudied: number;
   correctAnswers: number;
   incorrectAnswers: number;
-  deck: {
+  deck?: {
     _id: string;
     title: string;
   };
+  deckDeleted?: boolean;
 }
 
 interface StatsResponseData {

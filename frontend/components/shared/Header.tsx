@@ -23,12 +23,10 @@ const Header = () => {
   // Updated navigation links with About page
   const navigationLinks = [
     { name: "Home", href: "/" },
-    { name: "Blog", href: "/blog"},
+    { name: "Blog", href: "/blog" },
     { name: "Guide", href: "/guide" },
     { name: "About", href: "/about", hideWhenLoggedIn: true },
-    { name: "Community", href: "/community"},
-    { name: "Public Decks", href: "/community/public-decks", hideWhenLoggedIn: true },
-    { name: "My Decks", href: "/decks/my-decks", authRequired: true },
+    { name: "Community", href: "/community" },
     { name: "Decks", href: "/decks", authRequired: true },
     { name: "Create Deck", href: "/decks/new", authRequired: true },
     { name: "Study Sessions", href: "/sessions", authRequired: true },
@@ -236,7 +234,8 @@ const Header = () => {
           >
             <nav className="flex flex-col">
               {navigationLinks.map((link) =>
-                (!link.authRequired && (!link.hideWhenLoggedIn || !isLoggedIn)) ||
+                (!link.authRequired &&
+                  (!link.hideWhenLoggedIn || !isLoggedIn)) ||
                 (link.authRequired && isLoggedIn) ? (
                   <button
                     key={link.name}

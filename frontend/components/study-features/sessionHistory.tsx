@@ -9,7 +9,8 @@ interface SessionHistoryItem {
   deck: {
     _id: string;
     title: string;
-  };
+  } | null;
+  deckDeleted?: boolean;
   startTime: string;
   endTime: string;
   cardsStudied: number;
